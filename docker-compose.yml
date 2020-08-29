@@ -1,21 +1,27 @@
 version: "3"
 
 services:
-  postgres:
+  database:
     image: postgres:12-alpine
     ports:
       - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=docker
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
   server:
     build: "./server/"
     depends_on:
-      - postgres
-    links:
-      - postgres
+      - database
     ports:
       - "3001:3001"
+    environment:
+      - DB_HOST=database
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASS=docker
+      - DB_NAME=vuttr
     volumes:
       - ./server:/app
       - /app/node_modules
