@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "workspaces": [
-    "server"
+    "server",
+    "client"
   ],
   "repository": "https://github.com/flplima/bossabox-vuttr-fullstack.git",
   "author": "Felipe Lima <felipe.lds@live.com>",

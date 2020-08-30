@@ -6,4 +6,4 @@ RUN yarn --silent
 
 COPY . .
 
-CMD yarn start:dev
+CMD yarn start

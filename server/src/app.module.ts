@@ -4,6 +4,6 @@ import { ToolsModule } from './tools/tools.module';
 import { TagsModule } from './tags/tags.module';
 
 @Module({
-  imports: [DbModule, ToolsModule, TagsModule]
+  imports: [DbModule, ToolsModule, TagsModule],
 })
 export class AppModule {}
