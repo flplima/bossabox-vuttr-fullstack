@@ -34,10 +34,6 @@ describe('Tools', () => {
     await app.init();
   });
 
-  it('a', () => {
-    expect(app).toBeDefined();
-  });
-
   describe('GET /tools', () => {
     it('should be return all tools', async () => {
       const fakeTools = [new Tool()];
