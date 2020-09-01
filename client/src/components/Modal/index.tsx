@@ -1,21 +1,21 @@
 import React from "react";
-import { Backdrop, Modal } from "./styles";
+import { Backdrop, ModalBase } from "./styles";
 
 interface Props {
   show: boolean;
   onHide?: () => void;
 }
 
-const ModalBase: React.FC<Props> = ({ children, show, onHide }) => {
+const Modal: React.FC<Props> = ({ children, show, onHide }) => {
   return (
-    <Modal
+    <ModalBase
       show={show}
       onHide={onHide}
       renderBackdrop={(props: any) => <Backdrop {...props} />}
     >
       <div>{children}</div>
-    </Modal>
+    </ModalBase>
   );
 };
 
-export default ModalBase;
+export default Modal;

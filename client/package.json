@@ -1,5 +1,5 @@
 {
-  "name": "@laika/client-web",
+  "name": "@vuttr-fullstack/client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -13,6 +13,8 @@
     "axios": "^0.20.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-highlight-words": "^0.16.0",
+    "react-hook-form": "^6.7.0",
     "react-overlays": "^4.1.0",
     "react-scripts": "3.4.0",
     "recoil": "^0.0.10",
@@ -42,6 +44,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-highlight-words": "^0.16.1",
     "@types/styled-components": "^5.1.1"
   }
 }

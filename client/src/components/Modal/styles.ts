@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import OverlayModal from "react-overlays/Modal";
+import Modal from "react-overlays/Modal";
 
 export const Backdrop = styled.div`
   position: fixed;
@@ -12,7 +12,7 @@ export const Backdrop = styled.div`
   opacity: 0.5;
 `;
 
-export const Modal = styled(OverlayModal)`
+export const ModalBase = styled(Modal)`
   position: fixed;
   z-index: 1000;
   top: 50%;

@@ -4,21 +4,23 @@ import { RecoilRoot } from "recoil";
 import { GlobalStyle, Container } from "./styles";
 import Header from "./components/Header";
 import ToolsList from "./components/ToolsList";
-import AddTool from "./components/AddToolButton";
-import AddToolModal from "./components/AddToolModal";
+import Toolbar from "./components/Toolbar";
+import ModalAddTool from "./components/ModalAddTool";
+import ModalConfirmRemove from "./components/ModalConfirmRemove";
 
-export default function App() {
-  return (
-    <RecoilRoot>
-      <GlobalStyle />
+const App: React.FC = () => (
+  <RecoilRoot>
+    <GlobalStyle />
 
-      <Container>
-        <Header />
-        <AddTool />
-        <ToolsList />
-      </Container>
+    <Container>
+      <Header />
+      <Toolbar />
+      <ToolsList />
+    </Container>
 
-      <AddToolModal />
-    </RecoilRoot>
-  );
-}
+    <ModalAddTool />
+    <ModalConfirmRemove />
+  </RecoilRoot>
+);
+
+export default App;
