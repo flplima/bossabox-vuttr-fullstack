@@ -5,6 +5,6 @@ import { AppModule } from './app.module';
 
 NestFactory.create(AppModule).then(app => {
   app.enableCors();
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.listen(process.env.HTTP_PORT);
 });

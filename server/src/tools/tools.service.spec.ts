@@ -7,7 +7,6 @@ import { ToolDto } from './dtos/tool.dto';
 import { TagsService } from 'src/tags/tags.service';
 
 const toolsRepositoryMock = {
-  find: jest.fn(),
   create: jest.fn(),
   save: jest.fn(),
   delete: jest.fn(),
@@ -39,25 +38,17 @@ describe('ToolsService', () => {
     toolsService = module.get<ToolsService>(ToolsService);
   });
 
-  describe('ToolsService.findAll', () => {
+  describe('ToolsService.find', () => {
     it('should be return all tools', async () => {
       const fakeTools = [new Tool()];
-      toolsRepositoryMock.find.mockReturnValue(fakeTools);
-      const result = await toolsService.findAll();
-      expect(toolsRepositoryMock.find).toHaveBeenCalled();
-      expect(result).toBe(fakeTools);
-    });
-  });
-
-  describe('ToolsService.findByTagName', () => {
-    it('should be return all tools by tag name', async () => {
-      const fakeTagName = 'fakeTagName';
-      const fakeTools = [new Tool()];
       toolsRepositoryMock.createQueryBuilder.mockReturnValue({
+        leftJoinAndSelect: jest.fn().mockReturnThis(),
         innerJoin: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        orWhere: jest.fn().mockReturnThis(),
         getMany: jest.fn().mockReturnValue(fakeTools),
       });
-      const result = await toolsService.findByTagName(fakeTagName);
+      const result = await toolsService.find({});
       expect(toolsRepositoryMock.createQueryBuilder).toHaveBeenCalled();
       expect(result).toBe(fakeTools);
     });

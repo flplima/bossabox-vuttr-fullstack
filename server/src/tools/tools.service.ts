@@ -13,15 +13,27 @@ export class ToolsService {
     private tagsService: TagsService,
   ) {}
 
-  findAll() {
-    return this.toolsRepository.find();
-  }
-
-  findByTagName(tagName: string) {
-    return this.toolsRepository
-      .createQueryBuilder('tool')
-      .innerJoin('tool.tags', 'tag', 'tag.name = :tagName', { tagName })
-      .getMany();
+  find({ search, tagsOnly }: { search?: string; tagsOnly?: boolean }) {
+    const query = this.toolsRepository.createQueryBuilder('tool');
+    query.leftJoinAndSelect('tool.tags', 'tags');
+    if (search) {
+      query.innerJoin('tool.tags', 'tag');
+      query.where('LOWER(tag.name) LIKE :search', {
+        search: `%${search}%`,
+      });
+      if (!tagsOnly) {
+        query.orWhere('LOWER(tool.title) LIKE :search', {
+          search: `%${search}%`,
+        });
+        query.orWhere('LOWER(tool.link) LIKE :search', {
+          search: `%${search}%`,
+        });
+        query.orWhere('LOWER(tool.description) LIKE :search', {
+          search: `%${search}%`,
+        });
+      }
+    }
+    return query.getMany();
   }
 
   async create(data: ToolDto) {
