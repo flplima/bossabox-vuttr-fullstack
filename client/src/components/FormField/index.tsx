@@ -1,5 +1,6 @@
 import React from "react";
 import { Input } from "../../styles";
+import { Main, Label, ErrorMessage } from "./styles";
 
 interface Props {
   label: string;
@@ -10,11 +11,11 @@ interface Props {
 const FormField = React.forwardRef<HTMLInputElement, Props>(
   ({ label, name, error }, ref) => {
     return (
-      <div>
-        <span>{label}</span>
-        <Input ref={ref} name={name} />
-        {error && <span>{error}</span>}
-      </div>
+      <Main>
+        <Label>{label}</Label>
+        <Input ref={ref} error={!!error} name={name} />
+        {error && <ErrorMessage>{error}</ErrorMessage>}
+      </Main>
     );
   }
 );
