@@ -4,7 +4,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { TagsService } from 'src/tags/tags.service';
 import { Tool } from 'src/db/entities/tool.entity';
 import { ToolsService } from './tools.service';
-import { ToolDto } from './dtos/tool.dto';
+import { CreateToolDto } from './dtos/create-tool.dto';
 
 const toolsRepositoryMock = {
   create: jest.fn(),
@@ -102,7 +102,7 @@ describe('ToolsService', () => {
 
   describe('ToolsService.create', () => {
     it('should be create a tool', async () => {
-      const fakeData: ToolDto = {
+      const fakeData: CreateToolDto = {
         title: 'Test',
         link: 'http://example.com/',
         description: 'Just a test',

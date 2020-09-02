@@ -3,7 +3,7 @@ import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import { ToolsModule } from 'src/tools/tools.module';
 import { ToolsService } from 'src/tools/tools.service';
-import { ToolDto } from 'src/tools/dtos/tool.dto';
+import { CreateToolDto } from 'src/tools/dtos/create-tool.dto';
 import { Tool } from 'src/db/entities/tool.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Tag } from 'src/db/entities/tag.entity';
@@ -59,7 +59,7 @@ describe('Tools', () => {
 
   describe('POST /tools', () => {
     it('should be create a tool', async () => {
-      const data: ToolDto = {
+      const data: CreateToolDto = {
         title: 'Test',
         link: 'http://example.com/',
         description: 'Just a test',

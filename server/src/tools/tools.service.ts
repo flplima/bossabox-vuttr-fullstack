@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 
 import { Tool } from 'src/db/entities/tool.entity';
 import { TagsService } from 'src/tags/tags.service';
-import { ToolDto } from './dtos/tool.dto';
+import { CreateToolDto } from './dtos/create-tool.dto';
 
 @Injectable()
 export class ToolsService {
@@ -36,7 +36,7 @@ export class ToolsService {
     return query.getMany();
   }
 
-  async create(data: ToolDto) {
+  async create(data: CreateToolDto) {
     const tags = await Promise.all(
       data.tags.map(tagName => this.tagsService.findOneOrCreate(tagName)),
     );
