@@ -3,13 +3,15 @@ import useSWR from "swr";
 import { useSetRecoilState, useRecoilValue } from "recoil";
 import Highlighter from "react-highlight-words";
 
-import { ToolItem } from "./styles";
+import { ToolItem, ButtonRemove } from "./styles";
 import { fetcher } from "../../services/api";
 import {
   toolToRemoveState,
   searchQueryState,
   searchTagsOnlyState,
 } from "../../store/atoms";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const ToolsList: React.FC = () => {
   const searchQuery = useRecoilValue(searchQueryState);
@@ -49,7 +51,9 @@ const ToolsList: React.FC = () => {
               />
             </h2>
           </a>
-          <button onClick={onClickRemoveTool(tool)}>x remove</button>
+          <ButtonRemove onClick={onClickRemoveTool(tool)}>
+            <FontAwesomeIcon icon={faTimes} /> remove
+          </ButtonRemove>
           <p>
             <Highlighter
               searchWords={[searchQuery]}

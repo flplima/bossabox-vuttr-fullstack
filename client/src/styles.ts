@@ -10,7 +10,8 @@ export const GlobalStyle = createGlobalStyle`
   body {
     font-family: 'Source Sans Pro', sans-serif;
     -webkit-font-smoothing: antialiased;
-    background: #eee;
+    background: #EBEAED;
+    color: #170C3A;
   }
   body html #root {
     height: 100%;
@@ -29,7 +30,7 @@ export const Input = styled.input<{ error?: boolean }>`
   background: #f5f4f6 0% 0% no-repeat padding-box;
   border: 1px solid #ebeaed;
   border-radius: 5px;
-  width: 400px;
+  width: 100%;
   height: 50px;
   text-align: left;
   font: normal normal normal 20px/25px Source Sans Pro;
@@ -68,11 +69,15 @@ export const Button = styled.button`
   width: auto;
   overflow: visible;
   transition: background-color 0.2s;
+  cursor: pointer;
   :hover {
     background-color: #2f55cc;
   }
   :active {
     background-color: #244aa8;
+  }
+  svg {
+    margin-right: 8px;
   }
 `;
 

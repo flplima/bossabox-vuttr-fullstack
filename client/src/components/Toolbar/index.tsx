@@ -1,12 +1,16 @@
 import React from "react";
-import { Input } from "../../styles";
 import { useSetRecoilState, useRecoilState } from "recoil";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faSearch, faTimes } from "@fortawesome/free-solid-svg-icons";
+
 import {
   modalAddIsOpenState,
   searchQueryState,
   searchTagsOnlyState,
 } from "../../store/atoms";
-import { Main, ButtonAdd } from "./styles";
+import { Input, Button } from "../../styles";
+import { Main, SearchContainer, SearchInput, InputIcon } from "./styles";
+import Checkbox from "../Checkbox";
 
 const Toolbar: React.FC = () => {
   const setModalAddIsOpen = useSetRecoilState(modalAddIsOpenState);
@@ -20,18 +24,29 @@ const Toolbar: React.FC = () => {
 
   return (
     <Main>
-      <Input
-        placeholder="search"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
-      <input
-        type="checkbox"
-        checked={searchTagsOnly}
-        onChange={() => setSearchTagsOnly((state) => !state)}
-      />
-      <span>search in tags only</span>
-      <ButtonAdd onClick={onClickAdd}>+ Add</ButtonAdd>
+      <SearchContainer>
+        <SearchInput>
+          <InputIcon icon={faSearch} />
+          <Input
+            placeholder="search"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          {!!search.length && (
+            <a onClick={() => setSearch("")}>
+              <FontAwesomeIcon icon={faTimes} />
+            </a>
+          )}
+        </SearchInput>
+        <Checkbox
+          label="search in tags only"
+          checked={searchTagsOnly}
+          onClick={() => setSearchTagsOnly((state) => !state)}
+        />
+      </SearchContainer>
+      <Button onClick={onClickAdd}>
+        <FontAwesomeIcon icon={faPlus} /> Add
+      </Button>
     </Main>
   );
 };

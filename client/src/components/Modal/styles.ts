@@ -19,9 +19,21 @@ export const ModalBase = styled(Modal)`
   left: 50%;
   background: white;
   transform: translate(-50%, -50%);
-  padding: 20px;
   background-color: #ffffff;
   box-shadow: 0px 20px 25px #0000001a;
   border-radius: 5px;
   opacity: 1;
+`;
+
+export const ModalContent = styled.div`
+  position: relative;
+  padding: 30px;
+`;
+
+export const CloseButton = styled.a`
+  cursor: pointer;
+  position: absolute;
+  padding: 10px;
+  top: 20px;
+  right: 20px;
 `;

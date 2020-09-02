@@ -8,6 +8,7 @@ import { Button } from "../../styles";
 import { modalAddIsOpenState, searchQueryState } from "../../store/atoms";
 import api from "../../services/api";
 import FormField from "../FormField";
+import { ModalActions } from "./styles";
 
 interface Form {
   title: string;
@@ -53,7 +54,9 @@ const ModalAddTool: React.FC = () => {
         />
         <FormField label="Description" name="description" ref={form.register} />
         <FormField label="Tags" name="tags" ref={form.register} />
-        <Button type="submit">Add tool</Button>
+        <ModalActions>
+          <Button type="submit">Add tool</Button>
+        </ModalActions>
       </form>
     </Modal>
   );
