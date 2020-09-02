@@ -1,10 +1,11 @@
 import React from "react";
+import { Main, Title, Subtitle } from "./styles";
 
 const Header: React.FC = () => (
-  <>
-    <h1>VUTTR</h1>
-    <h2>Very Useful Tools to Remember</h2>
-  </>
+  <Main>
+    <Title>VUTTR</Title>
+    <Subtitle>Very Useful Tools to Remember</Subtitle>
+  </Main>
 );
 
 export default Header;
