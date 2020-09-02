@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
+import { TagsService } from 'src/tags/tags.service';
 import { Tool } from 'src/db/entities/tool.entity';
 import { ToolsService } from './tools.service';
 import { ToolDto } from './dtos/tool.dto';
-import { TagsService } from 'src/tags/tags.service';
 
 const toolsRepositoryMock = {
   create: jest.fn(),
@@ -41,15 +41,61 @@ describe('ToolsService', () => {
   describe('ToolsService.find', () => {
     it('should be return all tools', async () => {
       const fakeTools = [new Tool()];
-      toolsRepositoryMock.createQueryBuilder.mockReturnValue({
+      const queryBuilderMock = {
         leftJoinAndSelect: jest.fn().mockReturnThis(),
         innerJoin: jest.fn().mockReturnThis(),
         where: jest.fn().mockReturnThis(),
         orWhere: jest.fn().mockReturnThis(),
         getMany: jest.fn().mockReturnValue(fakeTools),
-      });
+      };
+      toolsRepositoryMock.createQueryBuilder.mockReturnValue(queryBuilderMock);
       const result = await toolsService.find({});
       expect(toolsRepositoryMock.createQueryBuilder).toHaveBeenCalled();
+      expect(queryBuilderMock.leftJoinAndSelect).toHaveBeenCalled();
+      expect(queryBuilderMock.innerJoin).not.toHaveBeenCalled();
+      expect(queryBuilderMock.where).not.toHaveBeenCalled();
+      expect(queryBuilderMock.orWhere).not.toHaveBeenCalled();
+      expect(result).toBe(fakeTools);
+    });
+
+    it('should be return tools filtered by search', async () => {
+      const fakeTools = [new Tool()];
+      const queryBuilderMock = {
+        leftJoinAndSelect: jest.fn().mockReturnThis(),
+        innerJoin: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        orWhere: jest.fn().mockReturnThis(),
+        getMany: jest.fn().mockReturnValue(fakeTools),
+      };
+      toolsRepositoryMock.createQueryBuilder.mockReturnValue(queryBuilderMock);
+      const result = await toolsService.find({ search: 'testing' });
+      expect(toolsRepositoryMock.createQueryBuilder).toHaveBeenCalled();
+      expect(queryBuilderMock.leftJoinAndSelect).toHaveBeenCalled();
+      expect(queryBuilderMock.innerJoin).toHaveBeenCalled();
+      expect(queryBuilderMock.where).toHaveBeenCalled();
+      expect(queryBuilderMock.orWhere).toHaveBeenCalledTimes(3);
+      expect(result).toBe(fakeTools);
+    });
+
+    it('should be return tools filtered by search in tags only', async () => {
+      const fakeTools = [new Tool()];
+      const queryBuilderMock = {
+        leftJoinAndSelect: jest.fn().mockReturnThis(),
+        innerJoin: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        orWhere: jest.fn().mockReturnThis(),
+        getMany: jest.fn().mockReturnValue(fakeTools),
+      };
+      toolsRepositoryMock.createQueryBuilder.mockReturnValue(queryBuilderMock);
+      const result = await toolsService.find({
+        search: 'testing',
+        tagsOnly: true,
+      });
+      expect(toolsRepositoryMock.createQueryBuilder).toHaveBeenCalled();
+      expect(queryBuilderMock.leftJoinAndSelect).toHaveBeenCalled();
+      expect(queryBuilderMock.innerJoin).toHaveBeenCalled();
+      expect(queryBuilderMock.where).toHaveBeenCalled();
+      expect(queryBuilderMock.orWhere).not.toHaveBeenCalled();
       expect(result).toBe(fakeTools);
     });
   });
