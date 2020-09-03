@@ -5,6 +5,7 @@ import { Tag } from 'src/db/entities/tag.entity';
 import { TagsService } from './tags.service';
 
 const tagsRepositoryMock = {
+  find: jest.fn(),
   findOne: jest.fn(),
   create: jest.fn(),
   save: jest.fn(),
@@ -25,6 +26,16 @@ describe('TagsService', () => {
     }).compile();
 
     tagsService = module.get<TagsService>(TagsService);
+  });
+
+  describe('TagsService.find', () => {
+    it('should be return all tags', async () => {
+      const fakeTags = [new Tag()];
+      tagsRepositoryMock.find.mockReturnValue(fakeTags);
+      const result = await tagsService.find();
+      expect(tagsRepositoryMock.find).toHaveBeenCalled();
+      expect(result).toBe(fakeTags);
+    });
   });
 
   describe('TagsService.findOneOrCreate', () => {
