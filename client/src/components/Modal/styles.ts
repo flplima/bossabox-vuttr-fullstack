@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Modal from "react-overlays/Modal";
+import { motion } from "framer-motion";
 
 export const Backdrop = styled.div`
   position: fixed;
@@ -17,17 +18,15 @@ export const ModalBase = styled(Modal)`
   z-index: 1000;
   top: 50%;
   left: 50%;
-  background: white;
   transform: translate(-50%, -50%);
-  background-color: #ffffff;
-  box-shadow: 0px 20px 25px #0000001a;
-  border-radius: 5px;
-  opacity: 1;
 `;
 
-export const ModalContent = styled.div`
+export const ModalContent = styled(motion.div)`
+  background-color: #fff;
   position: relative;
   padding: 30px;
+  box-shadow: 0px 20px 25px #0000001a;
+  border-radius: 5px;
 `;
 
 export const CloseButton = styled.a`

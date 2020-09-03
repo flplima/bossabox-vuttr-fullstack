@@ -9,13 +9,14 @@ interface Props {
 }
 
 const Modal: React.FC<Props> = ({ children, show, onHide }) => {
+  const renderBackdrop = (props: any) => <Backdrop {...props} />;
   return (
-    <ModalBase
-      show={show}
-      onHide={onHide}
-      renderBackdrop={(props: any) => <Backdrop {...props} />}
-    >
-      <ModalContent>
+    <ModalBase show={show} onHide={onHide} renderBackdrop={renderBackdrop}>
+      <ModalContent
+        initial={{ opacity: 0, scale: 0.2 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0 }}
+      >
         {children}
         <CloseButton onClick={onHide}>
           <FontAwesomeIcon icon={faTimes} />
