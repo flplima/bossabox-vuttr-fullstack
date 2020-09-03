@@ -4,16 +4,17 @@ import { Main, Label, ErrorMessage } from "./styles";
 
 interface Props {
   label: string;
-  name: string;
+  name?: string;
   error?: string;
+  customInput?: any;
 }
 
 const FormField = React.forwardRef<HTMLInputElement, Props>(
-  ({ label, name, error }, ref) => {
+  ({ label, name, error, customInput }, ref) => {
     return (
       <Main>
         <Label>{label}</Label>
-        <Input ref={ref} error={!!error} name={name} />
+        {customInput || <Input ref={ref} error={!!error} name={name} />}
         {error && <ErrorMessage>{error}</ErrorMessage>}
       </Main>
     );

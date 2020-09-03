@@ -10,8 +10,8 @@ export const ButtonRemove = styled.a`
   cursor: pointer;
   position: absolute;
   padding: 10px;
-  top: 20px;
-  right: 20px;
+  top: 8px;
+  right: 10px;
   svg {
     margin-right: 4px;
   }

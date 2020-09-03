@@ -1,6 +1,6 @@
 import React from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { useForm } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import { mutate } from "swr";
 
 import Modal from "../Modal";
@@ -9,25 +9,17 @@ import { modalAddIsOpenState, searchQueryState } from "../../store/atoms";
 import api from "../../services/api";
 import FormField from "../FormField";
 import { ModalActions } from "./styles";
-
-interface Form {
-  title: string;
-  link: string;
-  description: string;
-  tags: string; // string[]
-}
+import SelectTags from "./SelectTags";
+import { FormAddTool } from "../../types";
 
 const ModalAddTool: React.FC = () => {
   const [isOpen, setOpen] = useRecoilState(modalAddIsOpenState);
   const setSearchQuery = useSetRecoilState(searchQueryState);
-  const form = useForm<Form>();
+  const form = useForm<FormAddTool>();
 
-  const onSubmitForm = async (data: Form) => {
+  const onSubmitForm = async (data: FormAddTool) => {
     try {
-      await api.post("/tools", {
-        ...data,
-        tags: data.tags.split(","),
-      });
+      await api.post("/tools", data);
       setOpen(false);
       setSearchQuery("");
       mutate("/tools/");
@@ -39,25 +31,31 @@ const ModalAddTool: React.FC = () => {
   return (
     <Modal show={isOpen} onHide={() => setOpen(false)}>
       <h2>Add new tool</h2>
-      <form onSubmit={form.handleSubmit(onSubmitForm)}>
-        <FormField
-          label="Tool name"
-          name="title"
-          ref={form.register({ required: true })}
-          error={form.errors.title && "This field is required"}
-        />
-        <FormField
-          label="Tool link"
-          name="link"
-          ref={form.register({ required: true })}
-          error={form.errors.link && "This field is required"}
-        />
-        <FormField label="Description" name="description" ref={form.register} />
-        <FormField label="Tags" name="tags" ref={form.register} />
-        <ModalActions>
-          <Button type="submit">Add tool</Button>
-        </ModalActions>
-      </form>
+      <FormProvider {...form}>
+        <form onSubmit={form.handleSubmit(onSubmitForm)}>
+          <FormField
+            label="Tool name"
+            name="title"
+            ref={form.register({ required: true })}
+            error={form.errors.title && "This field is required"}
+          />
+          <FormField
+            label="Tool link"
+            name="link"
+            ref={form.register}
+            error={form.errors.link && "This field is required"}
+          />
+          <FormField
+            label="Description"
+            name="description"
+            ref={form.register}
+          />
+          <SelectTags />
+          <ModalActions>
+            <Button type="submit">Add tool</Button>
+          </ModalActions>
+        </form>
+      </FormProvider>
     </Modal>
   );
 };

@@ -11,7 +11,7 @@ const Checkbox: React.FC<Props> = ({ label, checked, onClick }) => {
   return (
     <Main onClick={onClick}>
       <Label>{label}</Label>
-      <CheckboxInput type="checkbox" checked={checked} />
+      <CheckboxInput readOnly type="checkbox" checked={checked} />
     </Main>
   );
 };

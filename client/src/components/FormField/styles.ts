@@ -10,6 +10,8 @@ export const Label = styled.label`
   line-height: 32px;
 `;
 
-export const ErrorMessage = styled.span`
-  color: red;
+export const ErrorMessage = styled.div`
+  margin-top: 4px;
+  text-align: right;
+  color: #f95e5a;
 `;
