@@ -15,7 +15,6 @@ const Modal: React.FC<Props> = ({ children, show, onHide }) => {
       <ModalContent
         initial={{ opacity: 0, scale: 0.2 }}
         animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 0 }}
       >
         {children}
         <CloseButton onClick={onHide}>
