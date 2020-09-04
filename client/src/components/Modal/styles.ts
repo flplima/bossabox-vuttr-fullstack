@@ -35,6 +35,7 @@ export const CloseButton = styled.a`
   padding: 10px;
   top: 20px;
   right: 20px;
+  color: #170c3a;
 `;
 
 export const ModalActions = styled.div`

@@ -16,6 +16,9 @@ export const GlobalStyle = createGlobalStyle`
   body html #root {
     height: 100%;
   }
+  a {
+    color: #244AA8;
+  }
 `;
 
 export const Container = styled.div`
