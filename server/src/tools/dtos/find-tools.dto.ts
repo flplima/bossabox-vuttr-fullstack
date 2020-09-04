@@ -6,6 +6,6 @@ export class FindToolsDto {
   search?: string;
 
   @IsOptional()
-  @Transform((value: any) => value === 'true' || value === '1')
+  @Transform((value: string) => value === 'true' || value === '1')
   tagsOnly: boolean;
 }

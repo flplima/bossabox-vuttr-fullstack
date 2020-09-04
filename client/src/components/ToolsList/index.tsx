@@ -42,7 +42,7 @@ const ToolsList: React.FC = () => {
     debounceSearch && `?search=${debounceSearch}&tagsOnly=${searchTagsOnly}`;
   const { data } = useSWR<Tool[]>(`/tools/${queryParams}`, fetcher);
 
-  const onClickRemoveTool = (tool: any) => () => {
+  const onClickRemoveTool = (tool: Tool) => () => {
     setToolToRemove(tool);
   };
 
