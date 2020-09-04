@@ -12,6 +12,13 @@ import { ModalActions } from "../Modal/styles";
 import SelectTags from "./SelectTags";
 import { FormAddTool } from "../../types";
 
+const putLinkProtocol = (link: string) => {
+  if (link && !link.startsWith("http")) {
+    return `http://${link}`;
+  }
+  return link;
+};
+
 const ModalAddTool: React.FC = () => {
   const [isOpen, setOpen] = useRecoilState(modalAddIsOpenState);
   const setSearchQuery = useSetRecoilState(searchQueryState);
@@ -19,7 +26,10 @@ const ModalAddTool: React.FC = () => {
 
   const onSubmitForm = async (data: FormAddTool) => {
     try {
-      await api.post("/tools", data);
+      await api.post("/tools", {
+        ...data,
+        link: putLinkProtocol(data.link),
+      });
       setOpen(false);
       setSearchQuery("");
       mutate("/tools/");
@@ -37,13 +47,15 @@ const ModalAddTool: React.FC = () => {
             label="Tool name"
             name="title"
             ref={form.register({ required: true })}
-            error={form.errors.title && "This field is required"}
+            error={form.errors.title && "Enter a name"}
           />
           <FormField
             label="Tool link"
             name="link"
-            ref={form.register}
-            error={form.errors.link && "This field is required"}
+            ref={form.register({
+              pattern: /(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()!@:%_+.~#?&//=]*)/,
+            })}
+            error={form.errors.link && "Enter a valid link"}
           />
           <FormField
             label="Description"
