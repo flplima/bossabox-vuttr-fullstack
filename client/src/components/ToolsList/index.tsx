@@ -9,6 +9,7 @@ import {
   ButtonRemove,
   ToolTitle,
   TagLink,
+  ToolsPlaceholder,
 } from "./styles";
 import { fetcher } from "../../services/api";
 import {
@@ -51,6 +52,8 @@ const ToolsList: React.FC = () => {
   };
 
   if (!data) return <div>Loading...</div>;
+
+  if (!data.length) return <ToolsPlaceholder>No tools found.</ToolsPlaceholder>;
 
   return (
     <>

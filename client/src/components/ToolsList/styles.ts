@@ -7,6 +7,14 @@ export const ToolItem = styled(Card)`
   position: relative;
 `;
 
+export const ToolsPlaceholder = styled(Card)`
+  margin: 16px 0px;
+  text-align: center;
+  background-color: #dedce1;
+  box-shadow: none;
+  border: 1px solid #c7c4cd;
+`;
+
 export const ToolDescription = styled.p`
   margin-top: 6px;
   margin-bottom: 12px;
