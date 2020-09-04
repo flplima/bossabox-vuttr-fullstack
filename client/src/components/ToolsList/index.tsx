@@ -19,7 +19,7 @@ import {
 } from "../../store/atoms";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { Tag } from "../../types";
+import { Tool } from "../../types";
 
 const ToolsList: React.FC = () => {
   const [searchQuery, setSearchQuery] = useRecoilState(searchQueryState);
@@ -40,15 +40,15 @@ const ToolsList: React.FC = () => {
 
   const queryParams =
     debounceSearch && `?search=${debounceSearch}&tagsOnly=${searchTagsOnly}`;
-  const { data } = useSWR(`/tools/${queryParams}`, fetcher);
+  const { data } = useSWR<Tool[]>(`/tools/${queryParams}`, fetcher);
 
   const onClickRemoveTool = (tool: any) => () => {
     setToolToRemove(tool);
   };
 
-  const onClickTag = (tag: Tag) => () => {
+  const onClickTag = (tag: string) => () => {
     setSearchTagsOnly(true);
-    setSearchQuery(tag.name);
+    setSearchQuery(tag);
   };
 
   if (!data) return <div>Loading...</div>;
@@ -57,7 +57,7 @@ const ToolsList: React.FC = () => {
 
   return (
     <>
-      {data.map((tool: any) => (
+      {data.map((tool) => (
         <ToolItem key={tool.id}>
           {tool.link ? (
             <a href={tool.link} target="_blank" rel="noopener noreferrer">
@@ -84,19 +84,19 @@ const ToolsList: React.FC = () => {
           </ButtonRemove>
           <ToolDescription>
             <Highlighter
-              searchWords={[searchQuery]}
+              searchWords={searchTagsOnly ? [] : [searchQuery]}
               autoEscape={true}
               textToHighlight={tool.description}
             />
           </ToolDescription>
           <span>
-            {tool.tags.map((tag: Tag) => (
+            {tool.tags.map((tag) => (
               <TagLink onClick={onClickTag(tag)}>
                 <Highlighter
-                  key={tag.id}
+                  key={tag}
                   searchWords={[searchQuery]}
                   autoEscape={true}
-                  textToHighlight={`#${tag.name}`}
+                  textToHighlight={`#${tag}`}
                 />
               </TagLink>
             ))}

@@ -1,10 +1,11 @@
-import { Controller, Get, Query, Post, Body, Delete, Param, HttpCode, ParseUUIDPipe } from '@nestjs/common';
+import { Controller, Get, Query, Post, Body, Delete, Param, HttpCode, ParseUUIDPipe, UseInterceptors, ClassSerializerInterceptor } from '@nestjs/common';
 import { ApiResponse, ApiParam } from '@nestjs/swagger';
 import { ToolsService } from './tools.service';
 import { CreateToolDto } from './dtos/create-tool.dto';
 import { FindToolsDto } from './dtos/find-tools.dto';
 
 @Controller('tools')
+@UseInterceptors(ClassSerializerInterceptor)
 export class ToolsController {
   constructor(private toolsService: ToolsService) {}
 

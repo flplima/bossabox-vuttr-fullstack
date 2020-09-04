@@ -3,7 +3,7 @@ export interface Tool {
   title: string;
   link: string;
   description: string;
-  tags: Tag[];
+  tags: string[];
 }
 
 export interface Tag {

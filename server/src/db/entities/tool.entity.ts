@@ -6,6 +6,7 @@ import {
   JoinTable,
 } from 'typeorm';
 import { Tag } from './tag.entity';
+import { Transform, Expose } from 'class-transformer';
 
 @Entity()
 export class Tool {
@@ -27,5 +28,8 @@ export class Tool {
     { eager: true },
   )
   @JoinTable()
+  @Transform((value: Tag[]) => value.map(tag => tag.name), {
+    toPlainOnly: true,
+  })
   tags: Tag[];
 }
