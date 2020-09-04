@@ -8,7 +8,7 @@ import { Button } from "../../styles";
 import { modalAddIsOpenState, searchQueryState } from "../../store/atoms";
 import api from "../../services/api";
 import FormField from "../FormField";
-import { ModalActions } from "./styles";
+import { ModalActions } from "../Modal/styles";
 import SelectTags from "./SelectTags";
 import { FormAddTool } from "../../types";
 

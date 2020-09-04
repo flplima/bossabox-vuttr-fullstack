@@ -36,3 +36,8 @@ export const CloseButton = styled.a`
   top: 20px;
   right: 20px;
 `;
+
+export const ModalActions = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;

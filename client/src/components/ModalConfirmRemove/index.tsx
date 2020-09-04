@@ -6,6 +6,8 @@ import Modal from "../Modal";
 import { Button } from "../../styles";
 import { toolToRemoveState, searchQueryState } from "../../store/atoms";
 import api from "../../services/api";
+import { ModalActions } from "../Modal/styles";
+import { ButtonCancel, Paragraph } from "./styles";
 
 const ModalConfirmRemove: React.FC = () => {
   const [tool, setTool] = useRecoilState(toolToRemoveState);
@@ -29,11 +31,13 @@ const ModalConfirmRemove: React.FC = () => {
   return (
     <Modal show={!!tool} onHide={closeModal}>
       <h2>Remove tool</h2>
-      <p>
-        Are you sure you want to remove <b>{tool?.title}</b>
-      </p>
-      <Button onClick={closeModal}>Cancel</Button>
-      <Button onClick={onConfirm}>Yes, remove</Button>
+      <Paragraph>
+        Are you sure you want to remove <b>{tool?.title}</b>?
+      </Paragraph>
+      <ModalActions>
+        <ButtonCancel onClick={closeModal}>Cancel</ButtonCancel>
+        <Button onClick={onConfirm}>Yes, remove</Button>
+      </ModalActions>
     </Modal>
   );
 };
