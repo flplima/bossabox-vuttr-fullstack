@@ -3,7 +3,13 @@ import useSWR from "swr";
 import { useSetRecoilState, useRecoilState } from "recoil";
 import Highlighter from "react-highlight-words";
 
-import { ToolItem, ToolDescription, ButtonRemove, TagLink } from "./styles";
+import {
+  ToolItem,
+  ToolDescription,
+  ButtonRemove,
+  ToolTitle,
+  TagLink,
+} from "./styles";
 import { fetcher } from "../../services/api";
 import {
   toolToRemoveState,
@@ -52,25 +58,26 @@ const ToolsList: React.FC = () => {
         <ToolItem key={tool.id}>
           {tool.link ? (
             <a href={tool.link} target="_blank" rel="noopener noreferrer">
-              <h2>
+              <ToolTitle>
                 <Highlighter
                   searchWords={searchTagsOnly ? [] : [searchQuery]}
                   autoEscape={true}
                   textToHighlight={tool.title}
                 />
-              </h2>
+              </ToolTitle>
             </a>
           ) : (
-            <h2>
+            <ToolTitle>
               <Highlighter
                 searchWords={searchTagsOnly ? [] : [searchQuery]}
                 autoEscape={true}
                 textToHighlight={tool.title}
               />
-            </h2>
+            </ToolTitle>
           )}
           <ButtonRemove onClick={onClickRemoveTool(tool)}>
-            <FontAwesomeIcon icon={faTimes} /> remove
+            <FontAwesomeIcon icon={faTimes} />
+            <span>remove</span>
           </ButtonRemove>
           <ToolDescription>
             <Highlighter

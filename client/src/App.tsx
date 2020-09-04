@@ -7,6 +7,7 @@ import ToolsList from "./components/ToolsList";
 import Toolbar from "./components/Toolbar";
 import ModalAddTool from "./components/ModalAddTool";
 import ModalConfirmRemove from "./components/ModalConfirmRemove";
+import FabButtonAdd from "./components/FabButtonAdd";
 
 const App: React.FC = () => (
   <RecoilRoot>
@@ -20,6 +21,7 @@ const App: React.FC = () => (
 
     <ModalAddTool />
     <ModalConfirmRemove />
+    <FabButtonAdd />
   </RecoilRoot>
 );
 

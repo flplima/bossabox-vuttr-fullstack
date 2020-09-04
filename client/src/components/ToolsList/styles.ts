@@ -19,11 +19,16 @@ export const ButtonRemove = styled.a`
   padding: 10px;
   top: 8px;
   right: 10px;
-  svg {
-    margin-right: 4px;
+  span {
+    margin-left: 4px;
   }
   :hover {
     text-decoration: underline;
+  }
+  @media (max-width: 768px) {
+    span {
+      display: none;
+    }
   }
 `;
 
@@ -33,5 +38,11 @@ export const TagLink = styled.a`
   font-weight: bold;
   :hover {
     text-decoration: underline;
+  }
+`;
+
+export const ToolTitle = styled.h2`
+  @media (max-width: 768px) {
+    width: calc(100vw - 120px);
   }
 `;

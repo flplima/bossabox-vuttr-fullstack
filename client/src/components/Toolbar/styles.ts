@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Input } from "../../styles";
+import { Input, Button } from "../../styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const Main = styled.div`
@@ -9,6 +9,9 @@ export const Main = styled.div`
 export const SearchContainer = styled.div`
   display: flex;
   flex-grow: 1;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 export const SearchInput = styled.div`
@@ -29,4 +32,18 @@ export const InputIcon = styled(FontAwesomeIcon)`
   position: absolute;
   top: 16px;
   left: 16px;
+`;
+
+export const ButtonAdd = styled(Button)`
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
+export const CheckboxContainer = styled.div`
+  display: flex;
+  align-items: center;
+  @media (max-width: 768px) {
+    margin-top: 12px;
+  }
 `;

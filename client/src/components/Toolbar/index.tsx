@@ -8,8 +8,15 @@ import {
   searchQueryState,
   searchTagsOnlyState,
 } from "../../store/atoms";
-import { Input, Button } from "../../styles";
-import { Main, SearchContainer, SearchInput, InputIcon } from "./styles";
+import { Input } from "../../styles";
+import {
+  Main,
+  SearchContainer,
+  SearchInput,
+  InputIcon,
+  ButtonAdd,
+  CheckboxContainer,
+} from "./styles";
 import Checkbox from "../Checkbox";
 
 const Toolbar: React.FC = () => {
@@ -38,15 +45,17 @@ const Toolbar: React.FC = () => {
             </a>
           )}
         </SearchInput>
-        <Checkbox
-          label="search in tags only"
-          checked={searchTagsOnly}
-          onClick={() => setSearchTagsOnly((state) => !state)}
-        />
+        <CheckboxContainer>
+          <Checkbox
+            label="search in tags only"
+            checked={searchTagsOnly}
+            onClick={() => setSearchTagsOnly((state) => !state)}
+          />
+        </CheckboxContainer>
       </SearchContainer>
-      <Button onClick={onClickAdd}>
+      <ButtonAdd onClick={onClickAdd}>
         <FontAwesomeIcon icon={faPlus} /> Add
-      </Button>
+      </ButtonAdd>
     </Main>
   );
 };
