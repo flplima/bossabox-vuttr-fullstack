@@ -58,6 +58,7 @@ const ModalAddTool: React.FC = () => {
             error={form.errors.link && "Enter a valid link"}
           />
           <FormField
+            multiline
             label="Description"
             name="description"
             ref={form.register}
