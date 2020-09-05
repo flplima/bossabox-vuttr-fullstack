@@ -17,21 +17,23 @@ export class ToolsService {
     const query = this.toolsRepository.createQueryBuilder('tool');
     query.leftJoinAndSelect('tool.tags', 'tags');
     if (search) {
-      query.innerJoin('tool.tags', 'tag');
-      query.where('LOWER(tag.name) LIKE :search', {
-        search: `%${search}%`,
-      });
-      if (!tagsOnly) {
-        query.orWhere('LOWER(tool.title) LIKE :search', {
-          search: `%${search}%`,
+      query
+        .innerJoin('tool.tags', 'tag')
+        .where(`LOWER(tag.name) LIKE '%' || LOWER(:search) || '%'`, {
+          search,
         });
-        query.orWhere('LOWER(tool.link) LIKE :search', {
-          search: `%${search}%`,
+    }
+    if (search && !tagsOnly) {
+      query
+        .orWhere(`LOWER(tool.title) LIKE '%' || LOWER(:search) || '%'`, {
+          search,
+        })
+        .orWhere(`LOWER(tool.link) LIKE '%' || LOWER(:search) || '%'`, {
+          search,
+        })
+        .orWhere(`LOWER(tool.description) LIKE '%' || LOWER(:search) || '%'`, {
+          search,
         });
-        query.orWhere('LOWER(tool.description) LIKE :search', {
-          search: `%${search}%`,
-        });
-      }
     }
     return query.getMany();
   }

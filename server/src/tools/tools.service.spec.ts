@@ -50,11 +50,17 @@ describe('ToolsService', () => {
       };
       toolsRepositoryMock.createQueryBuilder.mockReturnValue(queryBuilderMock);
       const result = await toolsService.find({});
-      expect(toolsRepositoryMock.createQueryBuilder).toHaveBeenCalled();
-      expect(queryBuilderMock.leftJoinAndSelect).toHaveBeenCalled();
+      expect(toolsRepositoryMock.createQueryBuilder).toHaveBeenCalledWith(
+        'tool',
+      );
+      expect(queryBuilderMock.leftJoinAndSelect).toHaveBeenCalledWith(
+        'tool.tags',
+        'tags',
+      );
       expect(queryBuilderMock.innerJoin).not.toHaveBeenCalled();
       expect(queryBuilderMock.where).not.toHaveBeenCalled();
       expect(queryBuilderMock.orWhere).not.toHaveBeenCalled();
+      expect(queryBuilderMock.getMany).toHaveBeenCalled();
       expect(result).toBe(fakeTools);
     });
 
@@ -69,11 +75,42 @@ describe('ToolsService', () => {
       };
       toolsRepositoryMock.createQueryBuilder.mockReturnValue(queryBuilderMock);
       const result = await toolsService.find({ search: 'testing' });
-      expect(toolsRepositoryMock.createQueryBuilder).toHaveBeenCalled();
-      expect(queryBuilderMock.leftJoinAndSelect).toHaveBeenCalled();
-      expect(queryBuilderMock.innerJoin).toHaveBeenCalled();
-      expect(queryBuilderMock.where).toHaveBeenCalled();
-      expect(queryBuilderMock.orWhere).toHaveBeenCalledTimes(3);
+      expect(toolsRepositoryMock.createQueryBuilder).toHaveBeenCalledWith(
+        'tool',
+      );
+      expect(queryBuilderMock.leftJoinAndSelect).toHaveBeenCalledWith(
+        'tool.tags',
+        'tags',
+      );
+      expect(queryBuilderMock.innerJoin).toHaveBeenCalledWith(
+        'tool.tags',
+        'tag',
+      );
+      expect(
+        queryBuilderMock.where,
+      ).toHaveBeenCalledWith(
+        `LOWER(tag.name) LIKE '%' || LOWER(:search) || '%'`,
+        { search: 'testing' },
+      );
+      expect(
+        queryBuilderMock.orWhere,
+      ).toHaveBeenCalledWith(
+        `LOWER(tool.title) LIKE '%' || LOWER(:search) || '%'`,
+        { search: 'testing' },
+      );
+      expect(
+        queryBuilderMock.orWhere,
+      ).toHaveBeenCalledWith(
+        `LOWER(tool.link) LIKE '%' || LOWER(:search) || '%'`,
+        { search: 'testing' },
+      );
+      expect(
+        queryBuilderMock.orWhere,
+      ).toHaveBeenCalledWith(
+        `LOWER(tool.description) LIKE '%' || LOWER(:search) || '%'`,
+        { search: 'testing' },
+      );
+      expect(queryBuilderMock.getMany).toHaveBeenCalled();
       expect(result).toBe(fakeTools);
     });
 
@@ -91,11 +128,25 @@ describe('ToolsService', () => {
         search: 'testing',
         tagsOnly: true,
       });
-      expect(toolsRepositoryMock.createQueryBuilder).toHaveBeenCalled();
-      expect(queryBuilderMock.leftJoinAndSelect).toHaveBeenCalled();
-      expect(queryBuilderMock.innerJoin).toHaveBeenCalled();
-      expect(queryBuilderMock.where).toHaveBeenCalled();
+      expect(toolsRepositoryMock.createQueryBuilder).toHaveBeenCalledWith(
+        'tool',
+      );
+      expect(queryBuilderMock.leftJoinAndSelect).toHaveBeenCalledWith(
+        'tool.tags',
+        'tags',
+      );
+      expect(queryBuilderMock.innerJoin).toHaveBeenCalledWith(
+        'tool.tags',
+        'tag',
+      );
+      expect(
+        queryBuilderMock.where,
+      ).toHaveBeenCalledWith(
+        `LOWER(tag.name) LIKE '%' || LOWER(:search) || '%'`,
+        { search: 'testing' },
+      );
       expect(queryBuilderMock.orWhere).not.toHaveBeenCalled();
+      expect(queryBuilderMock.getMany).toHaveBeenCalled();
       expect(result).toBe(fakeTools);
     });
   });
