@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import useSWR from "swr";
-import { useSetRecoilState, useRecoilState } from "recoil";
 import Highlighter from "react-highlight-words";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -13,21 +12,25 @@ import {
   ToolsPlaceholder,
 } from "./styles";
 import { fetcher } from "../../services/api";
-import {
-  toolToRemoveState,
-  searchQueryState,
-  searchTagsOnlyState,
-} from "../../store/atoms";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { Tool } from "../../types";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  searchQuerySelector,
+  searchTagsOnlySelector,
+} from "../../store/selectors";
+import {
+  setToolToRemove,
+  setSearchTagsOnly,
+  setSearchQuery,
+} from "../../store/actions";
 
 const ToolsList: React.FC = () => {
-  const [searchQuery, setSearchQuery] = useRecoilState(searchQueryState);
-  const [searchTagsOnly, setSearchTagsOnly] = useRecoilState(
-    searchTagsOnlyState
-  );
-  const setToolToRemove = useSetRecoilState(toolToRemoveState);
+  const dispatch = useDispatch();
+  const searchQuery = useSelector(searchQuerySelector);
+  const searchTagsOnly = useSelector(searchTagsOnlySelector);
 
   const [debounceSearch, setDebounceSearch] = useState("");
   useEffect(() => {
@@ -44,12 +47,12 @@ const ToolsList: React.FC = () => {
   const { data } = useSWR<Tool[]>(`/tools/${queryParams}`, fetcher);
 
   const onClickRemoveTool = (tool: Tool) => () => {
-    setToolToRemove(tool);
+    dispatch(setToolToRemove(tool));
   };
 
   const onClickTag = (tag: string) => () => {
-    setSearchTagsOnly(true);
-    setSearchQuery(tag);
+    dispatch(setSearchTagsOnly());
+    dispatch(setSearchQuery(tag));
   };
 
   return (

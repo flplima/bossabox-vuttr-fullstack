@@ -1,14 +1,11 @@
 import React from "react";
-import { useSetRecoilState, useRecoilState } from "recoil";
+import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faSearch, faTimes } from "@fortawesome/free-solid-svg-icons";
 
-import {
-  modalAddIsOpenState,
-  searchQueryState,
-  searchTagsOnlyState,
-} from "../../store/atoms";
 import { Input } from "../../styles";
+import Checkbox from "../Checkbox";
+
 import {
   Main,
   SearchContainer,
@@ -17,16 +14,37 @@ import {
   ButtonAdd,
   CheckboxContainer,
 } from "./styles";
-import Checkbox from "../Checkbox";
+
+import {
+  searchQuerySelector,
+  searchTagsOnlySelector,
+} from "../../store/selectors";
+
+import {
+  openModalAdd,
+  toggleSearchTagsOnly,
+  setSearchQuery,
+} from "../../store/actions";
 
 const Toolbar: React.FC = () => {
-  const setModalAddIsOpen = useSetRecoilState(modalAddIsOpenState);
-  const [search, setSearch] = useRecoilState(searchQueryState);
-  const [searchTagsOnly, setSearchTagsOnly] = useRecoilState(
-    searchTagsOnlyState
-  );
+  const dispatch = useDispatch();
+  const search = useSelector(searchQuerySelector);
+  const searchTagsOnly = useSelector(searchTagsOnlySelector);
+
   const onClickAdd = () => {
-    setModalAddIsOpen(true);
+    dispatch(openModalAdd());
+  };
+
+  const onClickSearchTagsOnly = () => {
+    dispatch(toggleSearchTagsOnly());
+  };
+
+  const onChangeInputSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setSearchQuery(e.target.value));
+  };
+
+  const clearInputSearch = () => {
+    dispatch(setSearchQuery(""));
   };
 
   return (
@@ -37,10 +55,10 @@ const Toolbar: React.FC = () => {
           <Input
             placeholder="search"
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={onChangeInputSearch}
           />
           {!!search.length && (
-            <a onClick={() => setSearch("")}>
+            <a onClick={clearInputSearch}>
               <FontAwesomeIcon icon={faTimes} />
             </a>
           )}
@@ -49,7 +67,7 @@ const Toolbar: React.FC = () => {
           <Checkbox
             label="search in tags only"
             checked={searchTagsOnly}
-            onClick={() => setSearchTagsOnly((state) => !state)}
+            onClick={onClickSearchTagsOnly}
           />
         </CheckboxContainer>
       </SearchContainer>

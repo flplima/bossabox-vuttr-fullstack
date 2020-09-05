@@ -1,27 +1,28 @@
 import React from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
 import { mutate } from "swr";
 
 import Modal from "../Modal";
 import { Button } from "../../styles";
-import { toolToRemoveState, searchQueryState } from "../../store/atoms";
 import api from "../../services/api";
 import { ModalActions } from "../Modal/styles";
 import { ButtonCancel, Paragraph } from "./styles";
+import { useDispatch, useSelector } from "react-redux";
+import { toolToRemoveSelector } from "../../store/selectors";
+import { setToolToRemove, setSearchQuery } from "../../store/actions";
 
 const ModalConfirmRemove: React.FC = () => {
-  const [tool, setTool] = useRecoilState(toolToRemoveState);
-  const setSearchQuery = useSetRecoilState(searchQueryState);
+  const dispatch = useDispatch();
+  const tool = useSelector(toolToRemoveSelector);
 
   const closeModal = () => {
-    setTool(null);
+    dispatch(setToolToRemove(null));
   };
 
   const onConfirm = async () => {
     try {
       await api.delete(`/tools/${tool?.id}`);
-      setSearchQuery("");
       mutate("/tools/");
+      dispatch(setSearchQuery(""));
       closeModal();
     } catch (err) {
       // todo: handle error

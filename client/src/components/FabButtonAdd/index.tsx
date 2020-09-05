@@ -1,11 +1,14 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+
 import { PaddingToButton, FabButton } from "./styles";
-import { useSetRecoilState } from "recoil";
-import { modalAddIsOpenState } from "../../store/atoms";
+import { openModalAdd } from "../../store/actions";
 
 const FabButtonAdd: React.FC = () => {
-  const setModalAddIsOpen = useSetRecoilState(modalAddIsOpenState);
-  const onClick = () => setModalAddIsOpen(true);
+  const dispatch = useDispatch();
+  const onClick = () => {
+    dispatch(openModalAdd());
+  };
 
   return (
     <PaddingToButton>

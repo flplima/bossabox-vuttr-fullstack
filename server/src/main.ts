@@ -10,7 +10,6 @@ NestFactory.create(AppModule).then(app => {
 
   const options = new DocumentBuilder()
     .setTitle('VUTTR API')
-    .setDescription('Documentação da API VUTTR')
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, options);

@@ -1,16 +1,17 @@
 import React from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
 import { useForm, FormProvider } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 import { mutate } from "swr";
 
 import Modal from "../Modal";
 import { Button } from "../../styles";
-import { modalAddIsOpenState, searchQueryState } from "../../store/atoms";
 import api from "../../services/api";
 import FormField from "../FormField";
 import { ModalActions } from "../Modal/styles";
 import SelectTags from "./SelectTags";
 import { FormAddTool } from "../../types";
+import { modalAddIsOpenSelector } from "../../store/selectors";
+import { closeModalAdd, setSearchQuery } from "../../store/actions";
 
 const putLinkProtocol = (link: string) => {
   if (link && !link.startsWith("http")) {
@@ -20,9 +21,13 @@ const putLinkProtocol = (link: string) => {
 };
 
 const ModalAddTool: React.FC = () => {
-  const [isOpen, setOpen] = useRecoilState(modalAddIsOpenState);
-  const setSearchQuery = useSetRecoilState(searchQueryState);
+  const dispatch = useDispatch();
+  const isOpen = useSelector(modalAddIsOpenSelector);
   const form = useForm<FormAddTool>();
+
+  const closeModal = () => {
+    dispatch(closeModalAdd());
+  };
 
   const onSubmitForm = async (data: FormAddTool) => {
     try {
@@ -30,16 +35,16 @@ const ModalAddTool: React.FC = () => {
         ...data,
         link: putLinkProtocol(data.link),
       });
-      setOpen(false);
-      setSearchQuery("");
       mutate("/tools/");
+      dispatch(setSearchQuery(""));
+      closeModal();
     } catch (err) {
       // todo: handle error
     }
   };
 
   return (
-    <Modal show={isOpen} onHide={() => setOpen(false)}>
+    <Modal show={isOpen} onHide={closeModal}>
       <h2>Add new tool</h2>
       <FormProvider {...form}>
         <form onSubmit={form.handleSubmit(onSubmitForm)}>
