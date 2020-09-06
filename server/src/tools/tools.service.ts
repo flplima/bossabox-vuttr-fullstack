@@ -13,27 +13,47 @@ export class ToolsService {
     private tagsService: TagsService,
   ) {}
 
-  find({ search, tagsOnly }: { search?: string; tagsOnly?: boolean }) {
+  find({ tag }: { tag?: string }) {
     const query = this.toolsRepository.createQueryBuilder('tool');
     query.leftJoinAndSelect('tool.tags', 'tags');
-    if (search) {
+    if (tag) {
       query
         .innerJoin('tool.tags', 'tag')
-        .where(`LOWER(tag.name) LIKE '%' || LOWER(:search) || '%'`, {
-          search,
-        });
+        .where(`LOWER(tag.name) = LOWER(:tag)`, { tag });
     }
-    if (search && !tagsOnly) {
+    return query.getMany();
+  }
+
+  search({
+    searchQuery,
+    tagsOnly,
+  }: {
+    searchQuery: string;
+    tagsOnly?: boolean;
+  }) {
+    const query = this.toolsRepository.createQueryBuilder('tool');
+    const searchQueryParams = { search: searchQuery };
+    query
+      .leftJoinAndSelect('tool.tags', 'tags')
+      .innerJoin('tool.tags', 'tag')
+      .where(
+        `LOWER(tag.name) LIKE '%' || LOWER(:search) || '%'`,
+        searchQueryParams,
+      );
+    if (!tagsOnly) {
       query
-        .orWhere(`LOWER(tool.title) LIKE '%' || LOWER(:search) || '%'`, {
-          search,
-        })
-        .orWhere(`LOWER(tool.link) LIKE '%' || LOWER(:search) || '%'`, {
-          search,
-        })
-        .orWhere(`LOWER(tool.description) LIKE '%' || LOWER(:search) || '%'`, {
-          search,
-        });
+        .orWhere(
+          `LOWER(tool.title) LIKE '%' || LOWER(:search) || '%'`,
+          searchQueryParams,
+        )
+        .orWhere(
+          `LOWER(tool.link) LIKE '%' || LOWER(:search) || '%'`,
+          searchQueryParams,
+        )
+        .orWhere(
+          `LOWER(tool.description) LIKE '%' || LOWER(:search) || '%'`,
+          searchQueryParams,
+        );
     }
     return query.getMany();
   }

@@ -10,6 +10,7 @@ import {
   ParseUUIDPipe,
   UseInterceptors,
   ClassSerializerInterceptor,
+  ParseBoolPipe,
 } from '@nestjs/common';
 import {
   ApiResponse,
@@ -20,7 +21,6 @@ import {
 } from '@nestjs/swagger';
 import { ToolsService } from './tools.service';
 import { CreateToolDto } from './dtos/create-tool.dto';
-import { FindToolsDto } from './dtos/find-tools.dto';
 
 @Controller('tools')
 @ApiTags('tools')
@@ -31,29 +31,33 @@ export class ToolsController {
   @Get()
   @ApiOperation({ summary: 'Find tools' })
   @ApiQuery({
-    name: 'search',
+    name: 'tag',
     type: String,
     required: false,
-    description: 'Search tools',
+    description: 'Filter tools by tag name',
   })
+  @ApiResponse({
+    status: 200,
+    description: 'The tools has been successfully returned.',
+  })
+  find(@Query('tag') tag?: string) {
+    return this.toolsService.find({ tag });
+  }
+
+  @Get('search/:searchQuery')
+  @ApiOperation({ summary: 'Filter tools by search' })
+  @ApiParam({ name: 'searchQuery' })
   @ApiQuery({
     name: 'tagsOnly',
     type: Boolean,
     required: false,
     description: 'Search in tags only',
   })
-  @ApiQuery({
-    name: 'tag',
-    type: String,
-    required: false,
-    description: 'Filter tools by tag',
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'The tools has been successfully returned.',
-  })
-  find(@Query() { search, tagsOnly }: FindToolsDto) {
-    return this.toolsService.find({ search, tagsOnly });
+  search(
+    @Param('searchQuery') searchQuery: string,
+    @Query('tagsOnly', ParseBoolPipe) tagsOnly: boolean,
+  ) {
+    return this.toolsService.search({ searchQuery, tagsOnly });
   }
 
   @Post()

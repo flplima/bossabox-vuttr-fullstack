@@ -59,11 +59,44 @@ describe('ToolsService', () => {
       );
       expect(queryBuilderMock.innerJoin).not.toHaveBeenCalled();
       expect(queryBuilderMock.where).not.toHaveBeenCalled();
-      expect(queryBuilderMock.orWhere).not.toHaveBeenCalled();
       expect(queryBuilderMock.getMany).toHaveBeenCalled();
       expect(result).toBe(fakeTools);
     });
 
+    it('should be return tools filtered by tag name', async () => {
+      const fakeTools = [new Tool()];
+      const queryBuilderMock = {
+        leftJoinAndSelect: jest.fn().mockReturnThis(),
+        innerJoin: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        orWhere: jest.fn().mockReturnThis(),
+        getMany: jest.fn().mockReturnValue(fakeTools),
+      };
+      toolsRepositoryMock.createQueryBuilder.mockReturnValue(queryBuilderMock);
+      const result = await toolsService.find({ tag: 'testing' });
+      expect(toolsRepositoryMock.createQueryBuilder).toHaveBeenCalledWith(
+        'tool',
+      );
+      expect(queryBuilderMock.leftJoinAndSelect).toHaveBeenCalledWith(
+        'tool.tags',
+        'tags',
+      );
+      expect(queryBuilderMock.innerJoin).toHaveBeenCalledWith(
+        'tool.tags',
+        'tag',
+      );
+      expect(queryBuilderMock.where).toHaveBeenCalledWith(
+        `LOWER(tag.name) = LOWER(:tag)`,
+        {
+          tag: 'testing',
+        },
+      );
+      expect(queryBuilderMock.getMany).toHaveBeenCalled();
+      expect(result).toBe(fakeTools);
+    });
+  });
+
+  describe('ToolsService.search', () => {
     it('should be return tools filtered by search', async () => {
       const fakeTools = [new Tool()];
       const queryBuilderMock = {
@@ -74,7 +107,7 @@ describe('ToolsService', () => {
         getMany: jest.fn().mockReturnValue(fakeTools),
       };
       toolsRepositoryMock.createQueryBuilder.mockReturnValue(queryBuilderMock);
-      const result = await toolsService.find({ search: 'testing' });
+      const result = await toolsService.search({ searchQuery: 'testing' });
       expect(toolsRepositoryMock.createQueryBuilder).toHaveBeenCalledWith(
         'tool',
       );
@@ -124,8 +157,8 @@ describe('ToolsService', () => {
         getMany: jest.fn().mockReturnValue(fakeTools),
       };
       toolsRepositoryMock.createQueryBuilder.mockReturnValue(queryBuilderMock);
-      const result = await toolsService.find({
-        search: 'testing',
+      const result = await toolsService.search({
+        searchQuery: 'testing',
         tagsOnly: true,
       });
       expect(toolsRepositoryMock.createQueryBuilder).toHaveBeenCalledWith(
