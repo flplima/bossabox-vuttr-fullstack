@@ -28,10 +28,15 @@ export const SearchInput = styled.div`
   }
 `;
 
-export const InputIcon = styled(FontAwesomeIcon)`
+export const SearchIcon = styled.img`
   position: absolute;
   top: 16px;
   left: 16px;
+  width: 18px;
+`;
+
+export const AddIcon = styled.img`
+  margin-right: 8px;
 `;
 
 export const ButtonAdd = styled(Button)`

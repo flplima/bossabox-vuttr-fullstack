@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 
-import { PaddingToButton, FabButton } from "./styles";
+import { PaddingToButton, FabButton, IconAdd } from "./styles";
 import { openModalAdd } from "../../store/actions";
 
 const FabButtonAdd: React.FC = () => {
@@ -12,7 +12,9 @@ const FabButtonAdd: React.FC = () => {
 
   return (
     <PaddingToButton>
-      <FabButton onClick={onClick}>+</FabButton>
+      <FabButton onClick={onClick}>
+        <IconAdd src="/add.svg" />
+      </FabButton>
     </PaddingToButton>
   );
 };

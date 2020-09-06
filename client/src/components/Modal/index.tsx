@@ -1,7 +1,5 @@
 import React from "react";
 import { Backdrop, ModalBase, ModalContent, CloseButton } from "./styles";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
   show: boolean;
@@ -18,7 +16,7 @@ const Modal: React.FC<Props> = ({ children, show, onHide }) => {
       >
         {children}
         <CloseButton onClick={onHide}>
-          <FontAwesomeIcon icon={faTimes} />
+          <img src="/close.svg" />
         </CloseButton>
       </ModalContent>
     </ModalBase>

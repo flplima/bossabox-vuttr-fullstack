@@ -1,7 +1,5 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faSearch, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 import { Input } from "../../styles";
 import Checkbox from "../Checkbox";
@@ -10,9 +8,10 @@ import {
   Main,
   SearchContainer,
   SearchInput,
-  InputIcon,
   ButtonAdd,
+  SearchIcon,
   CheckboxContainer,
+  AddIcon,
 } from "./styles";
 
 import {
@@ -51,7 +50,7 @@ const Toolbar: React.FC = () => {
     <Main>
       <SearchContainer>
         <SearchInput>
-          <InputIcon icon={faSearch} />
+          <SearchIcon src="/search.svg" />
           <Input
             placeholder="search"
             value={search}
@@ -59,7 +58,7 @@ const Toolbar: React.FC = () => {
           />
           {!!search.length && (
             <a onClick={clearInputSearch}>
-              <FontAwesomeIcon icon={faTimes} />
+              <img src="/close.svg" />
             </a>
           )}
         </SearchInput>
@@ -72,7 +71,8 @@ const Toolbar: React.FC = () => {
         </CheckboxContainer>
       </SearchContainer>
       <ButtonAdd onClick={onClickAdd}>
-        <FontAwesomeIcon icon={faPlus} /> Add
+        <AddIcon src="/add.svg" />
+        Add
       </ButtonAdd>
     </Main>
   );

@@ -28,3 +28,7 @@ export const FabButton = styled(Button)`
     display: none;
   }
 `;
+
+export const IconAdd = styled.img`
+  width: 25px;
+`;
