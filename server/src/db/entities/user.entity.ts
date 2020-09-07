@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 
 import { hash } from 'bcrypt';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 export class User {
@@ -20,8 +21,10 @@ export class User {
   email: string;
 
   @Column()
+  @Exclude()
   passwordHash: string;
 
+  @Exclude()
   password: string;
 
   @BeforeInsert()

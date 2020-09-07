@@ -2,6 +2,7 @@ import {
   Injectable,
   UnprocessableEntityException,
   UnauthorizedException,
+  ConflictException,
 } from '@nestjs/common';
 
 import { InjectRepository } from '@nestjs/typeorm';
@@ -21,9 +22,10 @@ export class UsersService {
   async create(data: CreateUserDto) {
     const userCount = await this.usersRepository.count({ email: data.email });
     if (userCount) {
-      throw new UnprocessableEntityException('E-mail is already registered');
+      throw new ConflictException('E-mail is already registered');
     }
     const user = this.usersRepository.create(data);
+    user.password = data.password;
     return this.usersRepository.save(user);
   }
 
