@@ -38,8 +38,13 @@ describe('ToolsService', () => {
     toolsService = module.get<ToolsService>(ToolsService);
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   describe('ToolsService.find', () => {
     it('should be return all tools', async () => {
+      const fakeUserId = 'fakeUserId';
       const fakeTools = [new Tool()];
       const queryBuilderMock = {
         leftJoinAndSelect: jest.fn().mockReturnThis(),
@@ -49,21 +54,24 @@ describe('ToolsService', () => {
         getMany: jest.fn().mockReturnValue(fakeTools),
       };
       toolsRepositoryMock.createQueryBuilder.mockReturnValue(queryBuilderMock);
-      const result = await toolsService.find({});
+      const result = await toolsService.find({}, fakeUserId);
       expect(toolsRepositoryMock.createQueryBuilder).toHaveBeenCalledWith(
         'tool',
       );
+      expect(
+        queryBuilderMock.where,
+      ).toHaveBeenCalledWith('tool.userId = :userId', { userId: fakeUserId });
       expect(queryBuilderMock.leftJoinAndSelect).toHaveBeenCalledWith(
         'tool.tags',
         'tags',
       );
       expect(queryBuilderMock.innerJoin).not.toHaveBeenCalled();
-      expect(queryBuilderMock.where).not.toHaveBeenCalled();
       expect(queryBuilderMock.getMany).toHaveBeenCalled();
       expect(result).toBe(fakeTools);
     });
 
     it('should be return tools filtered by tag name', async () => {
+      const fakeUserId = 'fakeUserId';
       const fakeTools = [new Tool()];
       const queryBuilderMock = {
         leftJoinAndSelect: jest.fn().mockReturnThis(),
@@ -73,10 +81,13 @@ describe('ToolsService', () => {
         getMany: jest.fn().mockReturnValue(fakeTools),
       };
       toolsRepositoryMock.createQueryBuilder.mockReturnValue(queryBuilderMock);
-      const result = await toolsService.find({ tag: 'testing' });
+      const result = await toolsService.find({ tag: 'testing' }, fakeUserId);
       expect(toolsRepositoryMock.createQueryBuilder).toHaveBeenCalledWith(
         'tool',
       );
+      expect(
+        queryBuilderMock.where,
+      ).toHaveBeenCalledWith('tool.userId = :userId', { userId: fakeUserId });
       expect(queryBuilderMock.leftJoinAndSelect).toHaveBeenCalledWith(
         'tool.tags',
         'tags',
@@ -98,6 +109,7 @@ describe('ToolsService', () => {
 
   describe('ToolsService.search', () => {
     it('should be return tools filtered by search', async () => {
+      const fakeUserId = 'fakeUserId';
       const fakeTools = [new Tool()];
       const queryBuilderMock = {
         leftJoinAndSelect: jest.fn().mockReturnThis(),
@@ -107,10 +119,16 @@ describe('ToolsService', () => {
         getMany: jest.fn().mockReturnValue(fakeTools),
       };
       toolsRepositoryMock.createQueryBuilder.mockReturnValue(queryBuilderMock);
-      const result = await toolsService.search({ searchQuery: 'testing' });
+      const result = await toolsService.search(
+        { searchQuery: 'testing' },
+        fakeUserId,
+      );
       expect(toolsRepositoryMock.createQueryBuilder).toHaveBeenCalledWith(
         'tool',
       );
+      expect(
+        queryBuilderMock.where,
+      ).toHaveBeenCalledWith('tool.userId = :userId', { userId: fakeUserId });
       expect(queryBuilderMock.leftJoinAndSelect).toHaveBeenCalledWith(
         'tool.tags',
         'tags',
@@ -148,6 +166,7 @@ describe('ToolsService', () => {
     });
 
     it('should be return tools filtered by search in tags only', async () => {
+      const fakeUserId = 'fakeUserId';
       const fakeTools = [new Tool()];
       const queryBuilderMock = {
         leftJoinAndSelect: jest.fn().mockReturnThis(),
@@ -157,13 +176,19 @@ describe('ToolsService', () => {
         getMany: jest.fn().mockReturnValue(fakeTools),
       };
       toolsRepositoryMock.createQueryBuilder.mockReturnValue(queryBuilderMock);
-      const result = await toolsService.search({
-        searchQuery: 'testing',
-        tagsOnly: true,
-      });
+      const result = await toolsService.search(
+        {
+          searchQuery: 'testing',
+          tagsOnly: true,
+        },
+        fakeUserId,
+      );
       expect(toolsRepositoryMock.createQueryBuilder).toHaveBeenCalledWith(
         'tool',
       );
+      expect(
+        queryBuilderMock.where,
+      ).toHaveBeenCalledWith('tool.userId = :userId', { userId: fakeUserId });
       expect(queryBuilderMock.leftJoinAndSelect).toHaveBeenCalledWith(
         'tool.tags',
         'tags',
@@ -186,6 +211,7 @@ describe('ToolsService', () => {
 
   describe('ToolsService.create', () => {
     it('should be create a tool', async () => {
+      const fakeUserId = 'fakeUserId';
       const fakeData: CreateToolDto = {
         title: 'Test',
         link: 'http://example.com/',
@@ -194,9 +220,10 @@ describe('ToolsService', () => {
       };
       const fakeTool = new Tool();
       toolsRepositoryMock.save.mockReturnValue(fakeTool);
-      const result = await toolsService.create(fakeData);
+      const result = await toolsService.create(fakeData, fakeUserId);
       expect(tagsServiceMock.findOneOrCreate).toHaveBeenCalledWith(
         fakeData.tags[0],
+        fakeUserId,
       );
       expect(toolsRepositoryMock.create).toHaveBeenCalled();
       expect(toolsRepositoryMock.save).toHaveBeenCalled();
@@ -206,9 +233,13 @@ describe('ToolsService', () => {
 
   describe('ToolsService.remove', () => {
     it('should be delete a tool by id', async () => {
+      const fakeUserId = 'fakeUserId';
       const fakeToolId = '12345';
-      await toolsService.remove(fakeToolId);
-      expect(toolsRepositoryMock.delete).toHaveBeenCalledWith(fakeToolId);
+      await toolsService.remove(fakeToolId, fakeUserId);
+      expect(toolsRepositoryMock.delete).toHaveBeenCalledWith({
+        id: fakeToolId,
+        userId: fakeUserId,
+      });
     });
   });
 });

@@ -5,6 +5,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import {
   UnprocessableEntityException,
   UnauthorizedException,
+  ConflictException,
 } from '@nestjs/common';
 
 import { User } from 'src/db/entities/user.entity';
@@ -61,7 +62,7 @@ describe('UsersService', () => {
       expect(result).toBe(fakeUser);
     });
 
-    it('should throw HTTP 422 Unprocessable Entity Exception if e-mail is already registered', async () => {
+    it('should throw HTTP 409 Conflict Exception if e-mail is already registered', async () => {
       const data: CreateUserDto = {
         name: 'Test',
         email: 'test@test.com',
@@ -72,7 +73,7 @@ describe('UsersService', () => {
         await usersService.create(data);
         fail();
       } catch (err) {
-        expect(err).toBeInstanceOf(UnprocessableEntityException);
+        expect(err).toBeInstanceOf(ConflictException);
       } finally {
         expect(usersRepositoryMock.count).toHaveBeenCalledWith({
           email: data.email,

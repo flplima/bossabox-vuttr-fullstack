@@ -4,6 +4,7 @@ import { UsersService } from 'src/users/users.service';
 import { AuthService } from './auth.service';
 import { TokenService } from './token.service';
 import { CreateUserDto } from 'src/users/dtos/create-user.dto';
+import { LoggedUserDto } from './dtos/logged-user.dto';
 
 const usersServiceMock = {
   findByEmailAndPassword: jest.fn(),
@@ -43,7 +44,9 @@ describe('AuthService', () => {
         'password',
       );
       expect(tokenServiceMock.generate).toHaveBeenCalledWith(fakeUser.id);
-      expect(result).toStrictEqual({ user: fakeUser, token: fakeToken });
+      expect(result).toBeInstanceOf(LoggedUserDto);
+      expect(result.token).toBe(fakeToken);
+      expect(result.user).toBe(fakeUser);
     });
   });
 
@@ -61,7 +64,9 @@ describe('AuthService', () => {
       const result = await authService.register(fakeData);
       expect(usersServiceMock.create).toHaveBeenCalledWith(fakeData);
       expect(tokenServiceMock.generate).toHaveBeenCalledWith(fakeUser.id);
-      expect(result).toStrictEqual({ user: fakeUser, token: fakeToken });
+      expect(result).toBeInstanceOf(LoggedUserDto);
+      expect(result.token).toBe(fakeToken);
+      expect(result.user).toBe(fakeUser);
     });
   });
 });
