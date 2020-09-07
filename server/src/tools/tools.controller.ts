@@ -29,6 +29,10 @@ import { CreateToolDto } from './dtos/create-tool.dto';
 @Controller('tools')
 @ApiTags('tools')
 @ApiBearerAuth()
+@ApiResponse({
+  status: 403,
+  description: 'Forbidden. Authentication is required.',
+})
 @UseInterceptors(ClassSerializerInterceptor)
 export class ToolsController {
   constructor(private toolsService: ToolsService) {}
