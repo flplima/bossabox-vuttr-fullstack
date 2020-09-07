@@ -1,5 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToMany,
+  ManyToOne,
+} from 'typeorm';
 import { Tool } from './tool.entity';
+import { User } from './user.entity';
 
 @Entity()
 export class Tag {
@@ -9,9 +16,15 @@ export class Tag {
   @Column()
   name: string;
 
+  @Column('uuid')
+  userId: string;
+
   @ManyToMany(
-    type => Tool,
+    () => Tool,
     tool => tool.tags,
   )
   tools: Tool[];
+
+  @ManyToOne(() => User)
+  user: User;
 }

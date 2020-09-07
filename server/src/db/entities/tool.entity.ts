@@ -4,9 +4,11 @@ import {
   PrimaryGeneratedColumn,
   ManyToMany,
   JoinTable,
+  ManyToOne,
 } from 'typeorm';
 import { Tag } from './tag.entity';
-import { Transform, Expose } from 'class-transformer';
+import { Transform } from 'class-transformer';
+import { User } from './user.entity';
 
 @Entity()
 export class Tool {
@@ -22,14 +24,18 @@ export class Tool {
   @Column()
   description: string;
 
+  @Column('uuid')
+  userId: string;
+
   @ManyToMany(
-    type => Tag,
+    () => Tag,
     tag => tag.tools,
     { eager: true },
   )
   @JoinTable()
-  @Transform((value: Tag[]) => value.map(tag => tag.name), {
-    toPlainOnly: true,
-  })
+  @Transform((value: Tag[]) => value.map(tag => tag.name))
   tags: Tag[];
+
+  @ManyToOne(() => User)
+  user: User;
 }
