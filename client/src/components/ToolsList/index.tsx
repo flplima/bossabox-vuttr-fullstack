@@ -13,8 +13,6 @@ import {
 } from "./styles";
 import { fetcher } from "../../services/api";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { Tool } from "../../types";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -89,7 +87,7 @@ const ToolsList: React.FC = () => {
               </ToolTitle>
             )}
             <ButtonRemove onClick={onClickRemoveTool(tool)}>
-              <FontAwesomeIcon icon={faTimes} />
+              <img src="/close.svg" alt="Remove tool" />
               <span>remove</span>
             </ButtonRemove>
             <ToolDescription>

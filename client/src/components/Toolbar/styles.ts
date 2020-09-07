@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Input, Button } from "../../styles";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const Main = styled.div`
   display: flex;
@@ -33,10 +32,6 @@ export const SearchIcon = styled.img`
   top: 16px;
   left: 16px;
   width: 18px;
-`;
-
-export const AddIcon = styled.img`
-  margin-right: 8px;
 `;
 
 export const ButtonAdd = styled(Button)`

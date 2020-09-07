@@ -11,7 +11,6 @@ import {
   ButtonAdd,
   SearchIcon,
   CheckboxContainer,
-  AddIcon,
 } from "./styles";
 
 import {
@@ -70,10 +69,7 @@ const Toolbar: React.FC = () => {
           />
         </CheckboxContainer>
       </SearchContainer>
-      <ButtonAdd onClick={onClickAdd}>
-        <AddIcon src="/add.svg" />
-        Add
-      </ButtonAdd>
+      <ButtonAdd onClick={onClickAdd}>Add</ButtonAdd>
     </Main>
   );
 };
