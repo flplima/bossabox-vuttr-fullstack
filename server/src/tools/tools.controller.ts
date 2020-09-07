@@ -12,18 +12,23 @@ import {
   ClassSerializerInterceptor,
   ParseBoolPipe,
 } from '@nestjs/common';
+
 import {
   ApiResponse,
   ApiParam,
   ApiTags,
   ApiOperation,
   ApiQuery,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
+
+import { AuthUserId } from 'src/auth/auth-user-id.decorator';
 import { ToolsService } from './tools.service';
 import { CreateToolDto } from './dtos/create-tool.dto';
 
 @Controller('tools')
 @ApiTags('tools')
+@ApiBearerAuth()
 @UseInterceptors(ClassSerializerInterceptor)
 export class ToolsController {
   constructor(private toolsService: ToolsService) {}
@@ -40,8 +45,8 @@ export class ToolsController {
     status: 200,
     description: 'The tools has been successfully returned.',
   })
-  find(@Query('tag') tag?: string) {
-    return this.toolsService.find({ tag });
+  find(@AuthUserId() userId: string, @Query('tag') tag?: string) {
+    return this.toolsService.find({ tag }, userId);
   }
 
   @Get('search/:searchQuery')
@@ -56,8 +61,9 @@ export class ToolsController {
   search(
     @Param('searchQuery') searchQuery: string,
     @Query('tagsOnly', ParseBoolPipe) tagsOnly: boolean,
+    @AuthUserId() userId: string,
   ) {
-    return this.toolsService.search({ searchQuery, tagsOnly });
+    return this.toolsService.search({ searchQuery, tagsOnly }, userId);
   }
 
   @Post()
@@ -67,8 +73,8 @@ export class ToolsController {
     description: 'The tool has been successfully created.',
   })
   @ApiResponse({ status: 400, description: 'Malformed body request syntax.' })
-  create(@Body() data: CreateToolDto) {
-    return this.toolsService.create(data);
+  create(@Body() data: CreateToolDto, @AuthUserId() userId: string) {
+    return this.toolsService.create(data, userId);
   }
 
   @Delete(':toolId')
@@ -80,7 +86,10 @@ export class ToolsController {
     description: 'The tool has been successfully deleted',
   })
   @ApiResponse({ status: 400, description: 'The toolId must be a valid uuid' })
-  remove(@Param('toolId', ParseUUIDPipe) toolId: string) {
-    return this.toolsService.remove(toolId);
+  remove(
+    @Param('toolId', ParseUUIDPipe) toolId: string,
+    @AuthUserId() userId: string,
+  ) {
+    return this.toolsService.remove(toolId, userId);
   }
 }

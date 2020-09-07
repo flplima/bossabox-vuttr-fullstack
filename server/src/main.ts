@@ -11,6 +11,7 @@ NestFactory.create(AppModule).then(app => {
   const options = new DocumentBuilder()
     .setTitle('VUTTR API')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document, { customSiteTitle: 'VUTTR API' });

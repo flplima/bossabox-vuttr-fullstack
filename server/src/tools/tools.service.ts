@@ -13,8 +13,9 @@ export class ToolsService {
     private tagsService: TagsService,
   ) {}
 
-  find({ tag }: { tag?: string }) {
+  find({ tag }: { tag?: string }, userId: string) {
     const query = this.toolsRepository.createQueryBuilder('tool');
+    query.where('tool.userId = :userId', { userId });
     query.leftJoinAndSelect('tool.tags', 'tags');
     if (tag) {
       query
@@ -24,14 +25,18 @@ export class ToolsService {
     return query.getMany();
   }
 
-  search({
-    searchQuery,
-    tagsOnly,
-  }: {
-    searchQuery: string;
-    tagsOnly?: boolean;
-  }) {
+  search(
+    {
+      searchQuery,
+      tagsOnly,
+    }: {
+      searchQuery: string;
+      tagsOnly?: boolean;
+    },
+    userId: string,
+  ) {
     const query = this.toolsRepository.createQueryBuilder('tool');
+    query.where('tool.userId = :userId', { userId });
     const searchQueryParams = { search: searchQuery };
     query
       .leftJoinAndSelect('tool.tags', 'tags')
@@ -58,18 +63,21 @@ export class ToolsService {
     return query.getMany();
   }
 
-  async create(data: CreateToolDto) {
+  async create(data: CreateToolDto, userId: string) {
     const tags = await Promise.all(
-      data.tags.map(tagName => this.tagsService.findOneOrCreate(tagName)),
+      data.tags.map(tagName =>
+        this.tagsService.findOneOrCreate(tagName, userId),
+      ),
     );
     const tool = this.toolsRepository.create({
       ...data,
       tags,
+      userId,
     });
     return this.toolsRepository.save(tool);
   }
 
-  remove(toolId: string) {
-    return this.toolsRepository.delete(toolId);
+  remove(toolId: string, userId: string) {
+    return this.toolsRepository.delete({ id: toolId, userId });
   }
 }

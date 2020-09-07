@@ -8,16 +8,16 @@ import { Tag } from 'src/db/entities/tag.entity';
 export class TagsService {
   constructor(@InjectRepository(Tag) private tagsRepository: Repository<Tag>) {}
 
-  async find() {
-    return this.tagsRepository.find();
+  async find(userId: string) {
+    return this.tagsRepository.find({ userId });
   }
 
-  async findOneOrCreate(tagName: string) {
-    const tag = await this.tagsRepository.findOne({ name: tagName });
+  async findOneOrCreate(tagName: string, userId: string) {
+    const tag = await this.tagsRepository.findOne({ name: tagName, userId });
     if (tag) {
       return tag;
     }
-    const newTag = this.tagsRepository.create({ name: tagName });
+    const newTag = this.tagsRepository.create({ name: tagName, userId });
     return this.tagsRepository.save(newTag);
   }
 }

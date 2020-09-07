@@ -1,5 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { ApiResponse, ApiTags, ApiOperation } from '@nestjs/swagger';
+
+import { AuthUserId } from 'src/auth/auth-user-id.decorator';
 import { TagsService } from './tags.service';
 
 @Controller('tags')
@@ -13,7 +15,7 @@ export class TagsController {
     status: 200,
     description: 'The tags has been successfully returned.',
   })
-  find() {
-    return this.tagsService.find();
+  find(@AuthUserId() userId: string) {
+    return this.tagsService.find(userId);
   }
 }

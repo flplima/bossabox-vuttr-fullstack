@@ -6,8 +6,10 @@ import {
   JoinTable,
   ManyToOne,
 } from 'typeorm';
+
+import { Transform, Exclude } from 'class-transformer';
+
 import { Tag } from './tag.entity';
-import { Transform } from 'class-transformer';
 import { User } from './user.entity';
 
 @Entity()
@@ -25,6 +27,7 @@ export class Tool {
   description: string;
 
   @Column('uuid')
+  @Exclude()
   userId: string;
 
   @ManyToMany(

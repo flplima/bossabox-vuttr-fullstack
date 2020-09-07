@@ -5,6 +5,9 @@ import {
   ManyToMany,
   ManyToOne,
 } from 'typeorm';
+
+import { Exclude } from 'class-transformer';
+
 import { Tool } from './tool.entity';
 import { User } from './user.entity';
 
@@ -17,6 +20,7 @@ export class Tag {
   name: string;
 
   @Column('uuid')
+  @Exclude()
   userId: string;
 
   @ManyToMany(
