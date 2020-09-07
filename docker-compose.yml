@@ -18,6 +18,7 @@ services:
       - "3000:3000"
     environment:
       - HTTP_PORT=3000
+      - JWT_KEY=1234
       - DB_HOST=database
       - DB_PORT=5432
       - DB_USER=postgres
