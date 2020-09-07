@@ -2,6 +2,7 @@ import { Reducer } from "redux";
 import { AppState, AppAction, AppActionTypes } from "./types";
 
 const initialState: AppState = {
+  user: null,
   modalAddIsOpen: false,
   toolToRemove: null,
   searchQuery: "",
@@ -13,6 +14,18 @@ const appReducer: Reducer<AppState, AppAction> = (
   action
 ) => {
   switch (action.type) {
+    case AppActionTypes.LOGIN:
+      return {
+        ...state,
+        user: action.user || null,
+      };
+
+    case AppActionTypes.LOGOUT:
+      return {
+        ...state,
+        user: null,
+      };
+
     case AppActionTypes.OPEN_MODAL_ADD:
       return {
         ...state,

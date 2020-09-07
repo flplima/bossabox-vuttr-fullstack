@@ -15,3 +15,7 @@ export const searchQuerySelector = (state: AppState) => {
 export const searchTagsOnlySelector = (state: AppState) => {
   return state.searchTagsOnly;
 };
+
+export const userIsLoggedSelector = (state: AppState) => {
+  return Boolean(state.user);
+};

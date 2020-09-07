@@ -1,7 +1,8 @@
 import { Action } from "redux";
-import { Tool } from "../types";
+import { Tool, User } from "../types";
 
 export interface AppState {
+  user: User | null;
   modalAddIsOpen: boolean;
   toolToRemove: Tool | null;
   searchQuery: string;
@@ -9,6 +10,8 @@ export interface AppState {
 }
 
 export enum AppActionTypes {
+  LOGIN = "LOGIN",
+  LOGOUT = "LOGOUT",
   OPEN_MODAL_ADD = "OPEN_MODAL_ADD",
   CLOSE_MODAL_ADD = "CLOSE_MODAL_ADD",
   SET_TOOL_TO_REMOVE = "SET_TOOL_TO_REMOVE",
@@ -20,4 +23,5 @@ export enum AppActionTypes {
 export interface AppAction extends Action<AppActionTypes> {
   toolToRemove?: Tool | null;
   searchQuery?: string;
+  user?: User;
 }

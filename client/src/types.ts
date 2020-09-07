@@ -11,6 +11,12 @@ export interface Tag {
   name: string;
 }
 
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+}
+
 export interface FormAddTool {
   title: string;
   link: string;

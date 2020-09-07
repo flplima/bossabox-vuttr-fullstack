@@ -1,5 +1,14 @@
 import { AppAction, AppActionTypes } from "./types";
-import { Tool } from "../types";
+import { Tool, User } from "../types";
+
+export const login = (user: User): AppAction => ({
+  type: AppActionTypes.LOGIN,
+  user,
+});
+
+export const logout = (): AppAction => ({
+  type: AppActionTypes.LOGOUT,
+});
 
 export const openModalAdd = (): AppAction => ({
   type: AppActionTypes.OPEN_MODAL_ADD,
