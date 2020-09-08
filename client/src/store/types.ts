@@ -1,8 +1,8 @@
 import { Action } from "redux";
-import { Tool, User } from "../types";
+import { Tool } from "../types";
 
 export interface AppState {
-  user: User | null;
+  loggedIn: boolean;
   modalAddIsOpen: boolean;
   toolToRemove: Tool | null;
   searchQuery: string;
@@ -23,5 +23,4 @@ export enum AppActionTypes {
 export interface AppAction extends Action<AppActionTypes> {
   toolToRemove?: Tool | null;
   searchQuery?: string;
-  user?: User;
 }

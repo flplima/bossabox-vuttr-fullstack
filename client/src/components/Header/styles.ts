@@ -2,8 +2,13 @@ import styled from "styled-components";
 
 export const Main = styled.header`
   padding: 32px 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
   @media (max-width: 768px) {
     text-align: center;
+    flex-direction: column;
+    align-items: center;
   }
 `;
 
@@ -18,4 +23,11 @@ export const Title = styled.h1`
 export const Subtitle = styled.span`
   font-size: 16px;
   font-weight: bold;
+`;
+
+export const ButtonLogout = styled.button`
+  color: #365df0;
+  @media (max-width: 768px) {
+    margin-top: 12px;
+  }
 `;

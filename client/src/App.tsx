@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { AnimatePresence, motion } from "framer-motion";
 
 import { GlobalStyle, Container } from "./styles";
 import Header from "./components/Header";
@@ -9,26 +10,36 @@ import ModalAddTool from "./components/ModalAddTool";
 import ModalConfirmRemove from "./components/ModalConfirmRemove";
 import FabButtonAdd from "./components/FabButtonAdd";
 import Login from "./components/Login";
-import { userIsLoggedSelector } from "./store/selectors";
+import { loggedInSelector } from "./store/selectors";
 
 const App: React.FC = () => {
-  const userIsLogged = useSelector(userIsLoggedSelector);
+  const loggedIn = useSelector(loggedInSelector);
   return (
     <>
       <GlobalStyle />
 
-      {userIsLogged ? (
-        <Container>
-          <Header />
-          <Toolbar />
-          <ToolsList />
-          <ModalAddTool />
-          <ModalConfirmRemove />
-          <FabButtonAdd />
-        </Container>
-      ) : (
-        <Login />
-      )}
+      <AnimatePresence exitBeforeEnter>
+        <motion.div
+          key={String(loggedIn)}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          {loggedIn ? (
+            <Container>
+              <Header />
+              <Toolbar />
+              <ToolsList />
+
+              <ModalAddTool />
+              <ModalConfirmRemove />
+              <FabButtonAdd />
+            </Container>
+          ) : (
+            <Login />
+          )}
+        </motion.div>
+      </AnimatePresence>
     </>
   );
 };

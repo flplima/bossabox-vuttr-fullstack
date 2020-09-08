@@ -2,7 +2,7 @@ import { Reducer } from "redux";
 import { AppState, AppAction, AppActionTypes } from "./types";
 
 const initialState: AppState = {
-  user: null,
+  loggedIn: Boolean(localStorage.getItem("token")),
   modalAddIsOpen: false,
   toolToRemove: null,
   searchQuery: "",
@@ -17,13 +17,13 @@ const appReducer: Reducer<AppState, AppAction> = (
     case AppActionTypes.LOGIN:
       return {
         ...state,
-        user: action.user || null,
+        loggedIn: true,
       };
 
     case AppActionTypes.LOGOUT:
       return {
         ...state,
-        user: null,
+        loggedIn: false,
       };
 
     case AppActionTypes.OPEN_MODAL_ADD:

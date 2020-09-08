@@ -10,7 +10,7 @@ export const GlobalStyle = createGlobalStyle`
   body {
     font-family: 'Source Sans Pro', sans-serif;
     -webkit-font-smoothing: antialiased;
-    background: #EBEAED;
+    background: #FCFCFD;
     color: #170C3A;
   }
   body html #root {
@@ -18,6 +18,26 @@ export const GlobalStyle = createGlobalStyle`
   }
   a {
     color: #244AA8;
+  }
+  button {
+    cursor: pointer;
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: auto;
+    overflow: visible;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-weight: 600;
+    line-height: normal;
+    -webkit-font-smoothing: inherit;
+    -moz-osx-font-smoothing: inherit;
+    -webkit-appearance: none;
+    &::-moz-focus-inner {
+      border: 0;
+      padding: 0;
+    }
   }
 `;
 

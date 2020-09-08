@@ -1,9 +1,8 @@
 import { AppAction, AppActionTypes } from "./types";
-import { Tool, User } from "../types";
+import { Tool } from "../types";
 
-export const login = (user: User): AppAction => ({
+export const login = (): AppAction => ({
   type: AppActionTypes.LOGIN,
-  user,
 });
 
 export const logout = (): AppAction => ({

@@ -4,6 +4,7 @@ import { Main, Label, ErrorMessage } from "./styles";
 
 interface Props {
   label: string;
+  type?: string;
   name?: string;
   error?: string;
   multiline?: boolean;
@@ -11,7 +12,7 @@ interface Props {
 }
 
 const FormField = React.forwardRef<any, Props>(
-  ({ label, name, error, customInput, multiline }, ref) => {
+  ({ label, type, name, error, customInput, multiline }, ref) => {
     return (
       <Main>
         <Label>{label}</Label>
@@ -20,7 +21,7 @@ const FormField = React.forwardRef<any, Props>(
         ) : multiline ? (
           <TextArea ref={ref} name={name} />
         ) : (
-          <Input ref={ref} error={!!error} name={name} />
+          <Input ref={ref} type={type} error={!!error} name={name} />
         )}
         {error && <ErrorMessage>{error}</ErrorMessage>}
       </Main>
