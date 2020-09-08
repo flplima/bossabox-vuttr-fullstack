@@ -80,7 +80,9 @@ const Login: React.FC = () => {
           type="password"
           ref={form.register({
             required: "Enter your password here",
-            minLength: { value: 4, message: "Must be at least 4 digits" },
+            minLength: registering
+              ? { value: 4, message: "Must be at least 4 digits" }
+              : undefined,
           })}
           error={form.errors.password?.message}
         />

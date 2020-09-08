@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import useSWR from "swr";
 import { useFormContext } from "react-hook-form";
 
@@ -13,8 +13,14 @@ interface Option {
 }
 
 const SelectTags: React.FC = () => {
-  const { register, setValue } = useFormContext<FormAddTool>();
+  const form = useFormContext<FormAddTool>();
   const { data } = useSWR<Tag[]>("/tags/", fetcher);
+
+  const [inputValue, setInputValue] = useState("");
+
+  const selectRef = useRef<any>();
+
+  const selectedTags = form.watch("tags");
 
   const options: Option[] =
     data?.map((tag) => ({
@@ -23,7 +29,7 @@ const SelectTags: React.FC = () => {
     })) || [];
 
   const onChange = (selectedOptions: any) => {
-    setValue(
+    form.setValue(
       "tags",
       selectedOptions?.map((option: Option) => {
         return option.value;
@@ -31,21 +37,48 @@ const SelectTags: React.FC = () => {
     );
   };
 
+  const onKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
+    const spaceKeyCode = 32;
+    const commaKeyCode = 188;
+    if ([spaceKeyCode, commaKeyCode].includes(e.keyCode)) {
+      e.preventDefault();
+      form.setValue("tags", [...(selectedTags || []), inputValue]);
+      setInputValue("");
+      selectRef.current?.focus();
+    }
+  };
+
+  const onInputChange = (value: string) => {
+    setInputValue(value);
+  };
+
+  const { register, unregister } = form;
   useEffect(() => {
     register({ name: "tags" });
-  }, [register]);
+    return () => {
+      unregister("tags");
+    };
+  }, [register, unregister]);
 
   return (
     <FormField
       label="Tags"
       customInput={
         <Select
+          ref={selectRef}
           isMulti
           closeMenuOnSelect={false}
           onChange={onChange}
+          onKeyDown={onKeyDown}
+          inputValue={inputValue}
+          onInputChange={onInputChange}
           options={options}
           classNamePrefix="select"
           placeholder=""
+          value={selectedTags?.map((tag) => ({
+            label: tag,
+            value: tag,
+          }))}
         />
       }
     />
