@@ -34,6 +34,7 @@ const ModalAddTool: React.FC = () => {
       await api.post("/tools", {
         ...data,
         link: putLinkProtocol(data.link),
+        tags: data.tags || [],
       });
       mutate("/tools/");
       dispatch(setSearchQuery(""));
