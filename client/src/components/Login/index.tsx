@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import FormField from "../FormField";
 import { useForm } from "react-hook-form";
 import api from "../../services/api";
@@ -47,6 +47,12 @@ const Login: React.FC = () => {
       );
     }
   };
+
+  const { clearErrors } = form;
+  useEffect(() => {
+    clearErrors();
+    setErrorMessage(null);
+  }, [registering, clearErrors]);
 
   return (
     <Main>

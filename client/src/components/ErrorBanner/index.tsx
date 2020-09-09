@@ -11,7 +11,9 @@ const ErrorBanner: React.FC<Props> = ({ text, onClose }) => {
     <Main>
       <ExclusionIcon src="/exclusion.svg" />
       <Text>{text}</Text>
-      <img onClick={onClose} src="/close-white.svg" alt="close" />
+      <button onClick={onClose}>
+        <img src="/close-white.svg" alt="close" />
+      </button>
     </Main>
   );
 };
