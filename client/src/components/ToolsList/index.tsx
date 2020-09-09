@@ -25,6 +25,8 @@ import {
   setSearchQuery,
 } from "../../store/actions";
 
+import closeIcon from "../../assets/close.svg";
+
 const ToolsList: React.FC = () => {
   const dispatch = useDispatch();
   const searchQuery = useSelector(searchQuerySelector);
@@ -87,7 +89,7 @@ const ToolsList: React.FC = () => {
               </ToolTitle>
             )}
             <ButtonRemove onClick={onClickRemoveTool(tool)}>
-              <img src="/close.svg" alt="Remove tool" />
+              <img src={closeIcon} alt="Remove tool" />
               <span>remove</span>
             </ButtonRemove>
             <ToolDescription>

@@ -1,5 +1,7 @@
 import React from "react";
+
 import { Backdrop, ModalBase, ModalContent, CloseButton } from "./styles";
+import closeIcon from "../../assets/close.svg";
 
 interface Props {
   show: boolean;
@@ -16,7 +18,7 @@ const Modal: React.FC<Props> = ({ children, show, onHide }) => {
       >
         {children}
         <CloseButton onClick={onHide}>
-          <img src="/close.svg" />
+          <img src={closeIcon} alt="close" />
         </CloseButton>
       </ModalContent>
     </ModalBase>

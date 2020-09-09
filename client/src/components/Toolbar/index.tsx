@@ -24,6 +24,9 @@ import {
   setSearchQuery,
 } from "../../store/actions";
 
+import searchIcon from "../../assets/search.svg";
+import closeIcon from "../../assets/close.svg";
+
 const Toolbar: React.FC = () => {
   const dispatch = useDispatch();
   const search = useSelector(searchQuerySelector);
@@ -49,16 +52,16 @@ const Toolbar: React.FC = () => {
     <Main>
       <SearchContainer>
         <SearchInput>
-          <SearchIcon src="/search.svg" />
+          <SearchIcon src={searchIcon} alt="search" />
           <Input
             placeholder="search"
             value={search}
             onChange={onChangeInputSearch}
           />
           {!!search.length && (
-            <a onClick={clearInputSearch}>
-              <img src="/close.svg" />
-            </a>
+            <button onClick={clearInputSearch}>
+              <img src={closeIcon} alt="close" />
+            </button>
           )}
         </SearchInput>
         <CheckboxContainer>
