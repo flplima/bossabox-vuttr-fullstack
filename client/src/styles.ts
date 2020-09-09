@@ -47,6 +47,7 @@ export const Container = styled.div`
   width: 90%;
   max-width: 1000px;
   margin: 0 auto;
+  min-height: 100vh;
 `;
 
 const inputCss = css`
