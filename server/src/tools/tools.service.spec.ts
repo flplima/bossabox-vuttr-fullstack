@@ -43,7 +43,7 @@ describe('ToolsService', () => {
   });
 
   describe('ToolsService.find', () => {
-    it('should be return all tools', async () => {
+    it('should return all tools', async () => {
       const fakeUserId = 'fakeUserId';
       const fakeTools = [new Tool()];
       const queryBuilderMock = {
@@ -70,7 +70,7 @@ describe('ToolsService', () => {
       expect(result).toBe(fakeTools);
     });
 
-    it('should be return tools filtered by tag name', async () => {
+    it('should return tools filtered by tag name', async () => {
       const fakeUserId = 'fakeUserId';
       const fakeTools = [new Tool()];
       const queryBuilderMock = {
@@ -108,7 +108,7 @@ describe('ToolsService', () => {
   });
 
   describe('ToolsService.search', () => {
-    it('should be return tools filtered by search', async () => {
+    it('should return tools filtered by search', async () => {
       const fakeUserId = 'fakeUserId';
       const fakeTools = [new Tool()];
       const queryBuilderMock = {
@@ -165,7 +165,7 @@ describe('ToolsService', () => {
       expect(result).toBe(fakeTools);
     });
 
-    it('should be return tools filtered by search in tags only', async () => {
+    it('should return tools filtered by search in tags only', async () => {
       const fakeUserId = 'fakeUserId';
       const fakeTools = [new Tool()];
       const queryBuilderMock = {
@@ -210,7 +210,7 @@ describe('ToolsService', () => {
   });
 
   describe('ToolsService.create', () => {
-    it('should be create a tool', async () => {
+    it('should create a tool', async () => {
       const fakeUserId = 'fakeUserId';
       const fakeData: CreateToolDto = {
         title: 'Test',
@@ -232,7 +232,7 @@ describe('ToolsService', () => {
   });
 
   describe('ToolsService.remove', () => {
-    it('should be delete a tool by id', async () => {
+    it('should delete a tool by id', async () => {
       const fakeUserId = 'fakeUserId';
       const fakeToolId = '12345';
       await toolsService.remove(fakeToolId, fakeUserId);

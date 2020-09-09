@@ -11,6 +11,8 @@ const tagsServiceMock = {
   find: jest.fn(),
 };
 
+const authMock = jest.fn();
+
 describe('Tags', () => {
   let app: INestApplication;
 
@@ -25,17 +27,37 @@ describe('Tags', () => {
       .compile();
 
     app = moduleRef.createNestApplication();
+    app.use((req, res, next) => {
+      req.auth = authMock();
+      next();
+    });
     await app.init();
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   describe('GET /tags', () => {
-    it('should be return all tags', async () => {
-      const fakeTags = [new Tag()];
-      tagsServiceMock.find.mockReturnValue(fakeTags);
-      const response = await request(app.getHttpServer()).get('/tags');
-      expect(tagsServiceMock.find).toHaveBeenCalled();
-      expect(response.status).toBe(200);
-      expect(response.body).toEqual(fakeTags);
+    describe('when token is provided', () => {
+      it('should return all tags from this user', async () => {
+        const fakeUserId = 'fakeUserId';
+        const fakeTags = [new Tag()];
+        authMock.mockReturnValueOnce({ userId: fakeUserId });
+        tagsServiceMock.find.mockReturnValue(fakeTags);
+        const response = await request(app.getHttpServer()).get('/tags');
+        expect(tagsServiceMock.find).toHaveBeenCalledWith(fakeUserId);
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual(fakeTags);
+      });
+    });
+
+    describe('when token is not provided', () => {
+      it('should return 403 Forbidden Exception', async () => {
+        const response = await request(app.getHttpServer()).get('/tags');
+        expect(response.status).toBe(403);
+        expect(tagsServiceMock.find).not.toHaveBeenCalled();
+      });
     });
   });
 

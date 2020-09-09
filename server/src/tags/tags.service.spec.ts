@@ -29,7 +29,7 @@ describe('TagsService', () => {
   });
 
   describe('TagsService.find', () => {
-    it('should be return all tags', async () => {
+    it('should return all tags', async () => {
       const fakeUserId = 'fakeUserId';
       const fakeTags = [new Tag()];
       tagsRepositoryMock.find.mockReturnValue(fakeTags);
@@ -42,7 +42,7 @@ describe('TagsService', () => {
   });
 
   describe('TagsService.findOneOrCreate', () => {
-    it('should be return the tag if the tag exists', async () => {
+    it('should return the tag if the tag exists', async () => {
       const fakeUserId = 'fakeUserId';
       const fakeTagName = 'fakeTagName';
       const fakeTag = new Tag();
@@ -57,7 +57,7 @@ describe('TagsService', () => {
       expect(result).toBe(fakeTag);
     });
 
-    it("should be create the tag if the tag doesn't exist", async () => {
+    it("should create the tag if the tag doesn't exist", async () => {
       const fakeUserId = 'fakeUserId';
       const fakeTagName = 'fakeTagName';
       const fakeTag = new Tag();
