@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import FormField from "../FormField";
 import { useForm } from "react-hook-form";
-import api from "../../services/api";
 import { useDispatch } from "react-redux";
+
+import { Main, ButtonSubmit, Title, Footer, Subtitle } from "./styles";
+import FormField from "../FormField";
+import api from "../../services/api";
 import { login } from "../../store/actions";
 import ErrorBanner from "../ErrorBanner";
-import { Main, ButtonSubmit, Title, Footer, Subtitle } from "./styles";
 import Collapse from "../Collapse";
 
 interface FormLogin {

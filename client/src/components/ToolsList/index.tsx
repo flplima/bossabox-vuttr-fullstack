@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import useSWR from "swr";
 import Highlighter from "react-highlight-words";
 import { motion, AnimatePresence } from "framer-motion";
+import { useDispatch, useSelector } from "react-redux";
+
+import { Tool } from "../../types";
+import { fetcher } from "../../services/api";
 
 import {
   ToolItem,
@@ -11,14 +15,12 @@ import {
   TagLink,
   ToolsPlaceholder,
 } from "./styles";
-import { fetcher } from "../../services/api";
 
-import { Tool } from "../../types";
-import { useDispatch, useSelector } from "react-redux";
 import {
   searchQuerySelector,
   searchTagsOnlySelector,
 } from "../../store/selectors";
+
 import {
   setToolToRemove,
   setSearchTagsOnly,

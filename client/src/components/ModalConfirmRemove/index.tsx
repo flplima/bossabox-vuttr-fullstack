@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { mutate } from "swr";
+import { useDispatch, useSelector } from "react-redux";
 
 import Modal from "../Modal";
 import { Button } from "../../styles";
 import api from "../../services/api";
 import { ModalActions } from "../Modal/styles";
 import { ButtonCancel, Paragraph } from "./styles";
-import { useDispatch, useSelector } from "react-redux";
 import { toolToRemoveSelector } from "../../store/selectors";
 import { setToolToRemove, setSearchQuery } from "../../store/actions";
 import Collapse from "../Collapse";
