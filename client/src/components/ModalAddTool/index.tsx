@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { mutate } from "swr";
@@ -12,6 +12,8 @@ import SelectTags from "./SelectTags";
 import { FormAddTool } from "../../types";
 import { modalAddIsOpenSelector } from "../../store/selectors";
 import { closeModalAdd, setSearchQuery } from "../../store/actions";
+import Collapse from "../Collapse";
+import ErrorBanner from "../ErrorBanner";
 
 const putLinkProtocol = (link: string) => {
   if (link && !link.startsWith("http")) {
@@ -24,6 +26,7 @@ const ModalAddTool: React.FC = () => {
   const dispatch = useDispatch();
   const isOpen = useSelector(modalAddIsOpenSelector);
   const form = useForm<FormAddTool>();
+  const [error, setError] = useState(false);
 
   const closeModal = () => {
     dispatch(closeModalAdd());
@@ -40,13 +43,21 @@ const ModalAddTool: React.FC = () => {
       dispatch(setSearchQuery(""));
       closeModal();
     } catch (err) {
-      // todo: handle error
+      setError(true);
     }
   };
+
+  const closeErrorMessage = () => setError(false);
 
   return (
     <Modal show={isOpen} onHide={closeModal}>
       <h2>Add new tool</h2>
+      <Collapse show={error}>
+        <ErrorBanner
+          text="There was a problem. Please try later"
+          onClose={closeErrorMessage}
+        />
+      </Collapse>
       <FormProvider {...form}>
         <form onSubmit={form.handleSubmit(onSubmitForm)}>
           <FormField

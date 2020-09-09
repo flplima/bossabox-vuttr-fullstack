@@ -18,12 +18,12 @@ const App: React.FC = () => {
     <>
       <GlobalStyle />
 
-      <AnimatePresence exitBeforeEnter>
+      <AnimatePresence exitBeforeEnter initial={false}>
         <motion.div
           key={String(loggedIn)}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.9 }}
         >
           {loggedIn ? (
             <Container>

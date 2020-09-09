@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { mutate } from "swr";
 
 import Modal from "../Modal";
@@ -9,13 +9,20 @@ import { ButtonCancel, Paragraph } from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { toolToRemoveSelector } from "../../store/selectors";
 import { setToolToRemove, setSearchQuery } from "../../store/actions";
+import Collapse from "../Collapse";
+import ErrorBanner from "../ErrorBanner";
 
 const ModalConfirmRemove: React.FC = () => {
   const dispatch = useDispatch();
   const tool = useSelector(toolToRemoveSelector);
+  const [error, setError] = useState(false);
 
   const closeModal = () => {
     dispatch(setToolToRemove(null));
+  };
+
+  const closeErrorMessage = () => {
+    setError(false);
   };
 
   const onConfirm = async () => {
@@ -25,13 +32,19 @@ const ModalConfirmRemove: React.FC = () => {
       dispatch(setSearchQuery(""));
       closeModal();
     } catch (err) {
-      // todo: handle error
+      setError(true);
     }
   };
 
   return (
     <Modal show={!!tool} onHide={closeModal}>
       <h2>Remove tool</h2>
+      <Collapse show={error}>
+        <ErrorBanner
+          text="There was a problem. Please try later"
+          onClose={closeErrorMessage}
+        />
+      </Collapse>
       <Paragraph>
         Are you sure you want to remove <b>{tool?.title}</b>?
       </Paragraph>
