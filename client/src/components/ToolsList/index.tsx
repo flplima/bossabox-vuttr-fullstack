@@ -103,7 +103,7 @@ const ToolsList: React.FC = () => {
             </ToolDescription>
             <span>
               {tool.tags.map((tag) => (
-                <TagLink onClick={onClickTag(tag)}>
+                <TagLink key={tag} onClick={onClickTag(tag)}>
                   <Highlighter
                     key={tag}
                     searchWords={[searchQuery]}
