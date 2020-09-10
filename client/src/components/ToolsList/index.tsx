@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from "react";
-import useSWR from "swr";
+import React from "react";
 import Highlighter from "react-highlight-words";
 import { motion, AnimatePresence } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Tool } from "../../types";
-import { fetcher } from "../../services/api";
 
 import {
   ToolItem,
@@ -28,25 +26,14 @@ import {
 } from "../../store/actions";
 
 import closeIcon from "../../assets/close.svg";
+import { useFetchTools } from "./hooks";
 
 const ToolsList: React.FC = () => {
   const dispatch = useDispatch();
   const searchQuery = useSelector(searchQuerySelector);
   const searchTagsOnly = useSelector(searchTagsOnlySelector);
 
-  const [debounceSearch, setDebounceSearch] = useState("");
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setDebounceSearch(searchQuery);
-    }, 300);
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [searchQuery]);
-
-  const queryParams =
-    debounceSearch && `search/${debounceSearch}?tagsOnly=${searchTagsOnly}`;
-  const { data } = useSWR<Tool[]>(`/tools/${queryParams}`, fetcher);
+  const tools = useFetchTools();
 
   const onClickRemoveTool = (tool: Tool) => () => {
     dispatch(setToolToRemove(tool));
@@ -60,16 +47,16 @@ const ToolsList: React.FC = () => {
   return (
     <AnimatePresence exitBeforeEnter>
       <motion.div
-        key={data?.length}
+        key={tools?.length}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.1 }}
       >
-        {data?.length === 0 && (
+        {tools?.length === 0 && (
           <ToolsPlaceholder>No tools found.</ToolsPlaceholder>
         )}
-        {data?.map((tool) => (
+        {tools?.map((tool) => (
           <ToolItem key={tool.id}>
             {tool.link ? (
               <a href={tool.link} target="_blank" rel="noopener noreferrer">
