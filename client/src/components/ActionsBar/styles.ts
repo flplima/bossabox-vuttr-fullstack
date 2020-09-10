@@ -15,7 +15,7 @@ export const SearchContainer = styled.div`
 
 export const SearchInput = styled.div`
   position: relative;
-  a {
+  button {
     padding: 10px;
     position: absolute;
     top: 6px;
