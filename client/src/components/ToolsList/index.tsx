@@ -77,10 +77,12 @@ const ToolsList: React.FC = () => {
                 />
               </ToolTitle>
             )}
+
             <ButtonRemove onClick={onClickRemoveTool(tool)}>
               <img src={closeIcon} alt="Remove tool" />
-              <span>remove</span>
+              <p>remove</p>
             </ButtonRemove>
+
             <ToolDescription>
               <Highlighter
                 searchWords={searchTagsOnly ? [] : [searchQuery]}
@@ -88,6 +90,7 @@ const ToolsList: React.FC = () => {
                 textToHighlight={tool.description}
               />
             </ToolDescription>
+
             <span>
               {tool.tags.map((tag) => (
                 <TagLink key={tag} onClick={onClickTag(tag)}>

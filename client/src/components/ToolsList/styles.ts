@@ -20,15 +20,18 @@ export const ToolDescription = styled.p`
   margin-bottom: 12px;
 `;
 
-export const ButtonRemove = styled.a`
-  cursor: pointer;
+export const ButtonRemove = styled.button`
+  display: flex;
+  align-items: center;
+  font-weight: normal;
   position: absolute;
   color: #170c3a;
   padding: 10px;
   top: 8px;
   right: 10px;
-  span {
+  p {
     margin-left: 4px;
+    margin-bottom: 4px;
   }
   :hover {
     text-decoration: underline;
