@@ -35,7 +35,10 @@ const Login: React.FC = () => {
     return /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value);
   };
 
+  const [submitting, setSubmitting] = useState(false);
+
   const onSubmitForm = async (data: FormLogin) => {
+    setSubmitting(true);
     setErrorMessage(null);
     try {
       const url = registering ? "auth/register" : "auth/login";
@@ -46,6 +49,7 @@ const Login: React.FC = () => {
       setErrorMessage(
         err.response?.data?.message || "There was a problem. Please try later"
       );
+      setSubmitting(false);
     }
   };
 
@@ -107,7 +111,7 @@ const Login: React.FC = () => {
           />
         </Collapse>
 
-        <ButtonSubmit type="submit">
+        <ButtonSubmit disabled={submitting} type="submit">
           {registering ? "Sign Up" : "Login"}
         </ButtonSubmit>
       </form>

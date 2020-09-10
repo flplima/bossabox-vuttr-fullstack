@@ -32,7 +32,10 @@ const ModalAddTool: React.FC = () => {
     dispatch(closeModalAdd());
   };
 
+  const [submitting, setSubmitting] = useState(false);
+
   const onSubmitForm = async (data: FormAddTool) => {
+    setSubmitting(true);
     try {
       await api.post("/tools", {
         ...data,
@@ -44,6 +47,8 @@ const ModalAddTool: React.FC = () => {
       closeModal();
     } catch (err) {
       setError(true);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -84,7 +89,9 @@ const ModalAddTool: React.FC = () => {
             <SelectTags />
           </Scrollable>
           <ModalActions>
-            <ButtonAdd type="submit">Add tool</ButtonAdd>
+            <ButtonAdd disabled={submitting} type="submit">
+              Add tool
+            </ButtonAdd>
           </ModalActions>
         </form>
       </FormProvider>

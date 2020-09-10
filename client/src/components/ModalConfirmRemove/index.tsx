@@ -25,7 +25,10 @@ const ModalConfirmRemove: React.FC = () => {
     setError(false);
   };
 
+  const [submitting, setSubmitting] = useState(false);
+
   const onConfirm = async () => {
+    setSubmitting(true);
     try {
       await api.delete(`/tools/${tool?.id}`);
       mutate("/tools/");
@@ -33,6 +36,8 @@ const ModalConfirmRemove: React.FC = () => {
       closeModal();
     } catch (err) {
       setError(true);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -50,7 +55,9 @@ const ModalConfirmRemove: React.FC = () => {
       </Paragraph>
       <ModalActions>
         <ButtonCancel onClick={closeModal}>Cancel</ButtonCancel>
-        <Button onClick={onConfirm}>Yes, remove</Button>
+        <Button disabled={submitting} onClick={onConfirm}>
+          Yes, remove
+        </Button>
       </ModalActions>
     </Modal>
   );
