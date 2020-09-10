@@ -21,8 +21,7 @@ export const Title = styled.h1`
 `;
 
 export const Subtitle = styled.span`
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 20px;
 `;
 
 export const ButtonLogout = styled.button`

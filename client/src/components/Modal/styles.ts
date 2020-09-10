@@ -19,10 +19,8 @@ export const ModalBase = styled(Modal)`
   top: 50%;
   left: 50%;
   width: 90%;
-  height: 90%;
   max-width: 500px;
   max-height: 700px;
-  overflow-y: scroll;
   transform: translate(-50%, -50%);
 `;
 
