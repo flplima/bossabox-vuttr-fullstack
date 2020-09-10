@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { GlobalStyle, Container } from "./styles";
 import Header from "./components/Header";
 import ToolsList from "./components/ToolsList";
-import Toolbar from "./components/Toolbar";
+import ActionsBar from "./components/ActionsBar";
 import ModalAddTool from "./components/ModalAddTool";
 import ModalConfirmRemove from "./components/ModalConfirmRemove";
 import FabButtonAdd from "./components/FabButtonAdd";
@@ -28,7 +28,7 @@ const App: React.FC = () => {
           {loggedIn ? (
             <Container>
               <Header />
-              <Toolbar />
+              <ActionsBar />
               <ToolsList />
 
               <ModalAddTool />

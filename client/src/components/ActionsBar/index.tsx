@@ -27,7 +27,7 @@ import {
 import searchIcon from "../../assets/search.svg";
 import closeIcon from "../../assets/close.svg";
 
-const Toolbar: React.FC = () => {
+const ActionsBar: React.FC = () => {
   const dispatch = useDispatch();
   const search = useSelector(searchQuerySelector);
   const searchTagsOnly = useSelector(searchTagsOnlySelector);
@@ -77,4 +77,4 @@ const Toolbar: React.FC = () => {
   );
 };
 
-export default Toolbar;
+export default ActionsBar;
