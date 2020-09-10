@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  database:
+    image: postgres:12-alpine
+    ports:
+      - "5432:5432"
+    env_file:
+      - ".env"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  server:
+    build:
+      context: "./server/"
+      dockerfile: Dockerfile.prod
+    depends_on:
+      - database
+    ports:
+      - "3000:3000"
+    env_file: ".env"

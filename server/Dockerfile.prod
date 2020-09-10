@@ -1,0 +1,10 @@
+FROM node:12-alpine
+
+WORKDIR /app
+COPY package.json ./
+RUN yarn --silent
+
+COPY . .
+RUN yarn build
+
+CMD yarn start:prod
