@@ -109,8 +109,10 @@ export const Button = styled.button`
   :active {
     background-color: #244aa8;
   }
-  svg {
-    margin-right: 8px;
+  :disabled {
+    background-color: #b9c6fa;
+    color: #e1e7fd;
+    cursor: not-allowed;
   }
 `;
 
