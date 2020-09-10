@@ -20,6 +20,7 @@ export const Subtitle = styled.p`
 `;
 
 export const ButtonSubmit = styled(Button)`
+  margin-top: 16px;
   width: 100%;
 `;
 
