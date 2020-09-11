@@ -6,19 +6,16 @@ VUTTR (Very Useful Tools to Remember) é um simples repositório para gerenciar 
 
 ![vuttr](https://user-images.githubusercontent.com/20775579/92924820-e876ad80-f40f-11ea-845f-a14b66db24e9.gif)
 
-
 ## Table of Contents
 
-- [VUTTR](#vuttr)
-  - [Table of Contents](#table-of-contents)
-  - [Como acessar](#como-acessar)
-  - [Este repositório contém](#este-repositório-contém)
-    - [Front-end](#front-end)
-    - [Back-end](#back-end)
-  - [Instruções para executar localmente](#instruções-para-executar-localmente)
-  - [Testes](#testes)
-  - [ORM](#orm)
-  - [Autor](#autor)
+- [Como acessar](#como-acessar)
+- [Este repositório contém](#este-repositório-contém)
+  - [Front-end](#front-end)
+  - [Back-end](#back-end)
+- [Instruções para executar localmente](#instruções-para-executar-localmente)
+- [Testes](#testes)
+- [ORM](#orm)
+- [Autor](#autor)
 
 ## Como acessar
 
