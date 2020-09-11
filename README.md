@@ -6,6 +6,20 @@ VUTTR (Very Useful Tools to Remember) é um simples repositório para gerenciar 
 
 ![vuttr](https://user-images.githubusercontent.com/20775579/92924820-e876ad80-f40f-11ea-845f-a14b66db24e9.gif)
 
+
+## Table of Contents
+
+- [VUTTR](#vuttr)
+  - [Table of Contents](#table-of-contents)
+  - [Como acessar](#como-acessar)
+  - [Este repositório contém](#este-repositório-contém)
+    - [Front-end](#front-end)
+    - [Back-end](#back-end)
+  - [Instruções para executar localmente](#instruções-para-executar-localmente)
+  - [Testes](#testes)
+  - [ORM](#orm)
+  - [Autor](#autor)
+
 ## Como acessar
 
 Este projeto está publicado em ambiente de produção na AWS e você pode acessá-lo pelo link abaixo:
@@ -72,7 +86,7 @@ yarn test:e2e
 
 ## ORM
 
-No diretório **server** você pode usar a [CLI do TypeORM](https://github.com/typeorm/typeorm/blob/master/docs/using-cli.md) para manutenção do banco de dados. Antes, é necessário que você tenha iniciado o ambiente com o docker-compose, para que a CLI possa identificar o banco de dados corretamente.
+No diretório **server** você pode usar a [CLI do TypeORM](https://github.com/typeorm/typeorm/blob/master/docs/using-cli.md) para manutenção do banco de dados. Antes, é necessário que você tenha iniciado o ambiente com o docker-compose para que a CLI possa identificar o banco de dados corretamente.
 
 ```bash
 # entre no diretório server
