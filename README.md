@@ -14,7 +14,7 @@ https://vuttr-bossabox.felipelima.xyz/
 
 ## Este repositório contém
 
-### Frontend
+### Front-end
 
 - **React + Typescript**
 - **UseSWR** e **Axios** para comunicação com a API REST
@@ -23,7 +23,7 @@ https://vuttr-bossabox.felipelima.xyz/
 - **React Hook Form** para os formulários
 - **Framer Motion** para animações
 
-### Backend
+### Back-end
 
 - **NestJs + Typescript**
 - **TypeORM + PostgreSQL** para persistência dos dados
@@ -34,7 +34,7 @@ https://vuttr-bossabox.felipelima.xyz/
 
 ## Instruções para executar localmente
 
-Este repositório é um **monorepo** contendo o **backend** e o **frontend** do VUTTR, tudo conteinerizado no Docker, inclusive o banco de dados.
+Este repositório é um **monorepo** contendo o **Back-end** e o **Front-end** do VUTTR, tudo conteinerizado no Docker, inclusive o banco de dados.
 
 Para executá-lo localmente tudo o que você precisa fazer é clonar este repositório, instalar as dependências com o yarn e iniciar o ambiente com o Docker Compose. Basta executar os comandos abaixo:
 
@@ -45,15 +45,15 @@ yarn install
 docker-compose up
 ```
 
-Ao executar o `docker-compose up`, automaticamente serão montados um container para o banco de dados Postgres, um container para o backend (NestJS) e um para o front-end (React). A criação do banco de dados e as migrações serão executadas automaticamente também.
+Ao executar o `docker-compose up`, automaticamente serão montados um container para o banco de dados Postgres, um container para o Back-end (NestJS) e um para o front-end (React). A criação do banco de dados e as migrações serão executadas automaticamente também.
 
-O backend estará na porta 3000, o frontend na porta 3001 e o banco de dados na porta 5432.
+O Back-end estará na porta 3000, o Front-end na porta 3001 e o banco de dados na porta 5432.
 
 Depois do ambiente ser iniciado, acesse um dos endereços abaixo no seu navegador:
 
-Frontend (React): http://localhost:3001/
+Front-end (React): http://localhost:3001/
 
-Backend (API docs): http://localhost:3000/
+Back-end (API docs): http://localhost:3000/
 
 ## Testes
 
