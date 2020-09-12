@@ -9,10 +9,10 @@ VUTTR (Very Useful Tools to Remember) é um simples repositório para gerenciar 
 ## Table of Contents
 
 - [Como acessar](#como-acessar)
+- [Instruções para executar localmente](#instruções-para-executar-localmente)
 - [Este repositório contém](#este-repositório-contém)
   - [Front-end](#front-end)
   - [Back-end](#back-end)
-- [Instruções para executar localmente](#instruções-para-executar-localmente)
 - [Testes](#testes)
 - [ORM](#orm)
 - [Autor](#autor)
@@ -22,26 +22,6 @@ VUTTR (Very Useful Tools to Remember) é um simples repositório para gerenciar 
 Este projeto está publicado em ambiente de produção na AWS e você pode acessá-lo pelo link abaixo:
 
 https://vuttr-bossabox.felipelima.xyz/
-
-## Este repositório contém
-
-### Front-end
-
-- **React + Typescript**
-- **UseSWR** e **Axios** para comunicação com a API REST
-- **Styled Components** para estilização, de acordo com os wireframes e style guide da BossaBox
-- **Redux** para gerenciamento de estado global
-- **React Hook Form** para os formulários
-- **Framer Motion** para animações
-
-### Back-end
-
-- **NestJs + Typescript**
-- **TypeORM + PostgreSQL** para persistência dos dados
-- **JWT** para tokens de autenticação
-- **Jest + Supertest** para testes automatizados
-- **Swagger (OpenAPI)** para documentação da API
-- **Sentry** para monitoramento de erros
 
 ## Instruções para executar localmente
 
@@ -65,6 +45,26 @@ Depois do ambiente ser iniciado, acesse um dos endereços abaixo no seu navegado
 Front-end (React): http://localhost:3001/
 
 Back-end (API docs): http://localhost:3000/
+
+## Este repositório contém
+
+### Front-end
+
+- **React + Typescript**
+- **UseSWR** e **Axios** para comunicação com a API REST
+- **Styled Components** para estilização, de acordo com os wireframes e style guide da BossaBox
+- **Redux** para gerenciamento de estado global
+- **React Hook Form** para os formulários
+- **Framer Motion** para animações
+
+### Back-end
+
+- **NestJs + Typescript**
+- **TypeORM + PostgreSQL** para persistência dos dados
+- **JWT** para tokens de autenticação
+- **Jest + Supertest** para testes automatizados
+- **Swagger (OpenAPI)** para documentação da API
+- **Sentry** para monitoramento de erros
 
 ## Testes
 
