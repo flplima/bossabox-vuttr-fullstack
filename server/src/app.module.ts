@@ -8,14 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { DecodeTokenMiddleware } from './auth/decode-token.middleware';
 
 @Module({
-  imports: [
-    DbModule,
-    AuthModule,
-    ToolsModule,
-    TagsModule,
-    UsersModule,
-    AuthModule,
-  ],
+  imports: [DbModule, AuthModule, ToolsModule, TagsModule, UsersModule],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
